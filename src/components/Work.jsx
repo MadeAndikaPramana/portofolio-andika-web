@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { MORE, NICHES, PROJECTS, WHATSAPP } from '../data'
 import { ArrowIcon, ChatIcon, jump } from './ui'
@@ -14,11 +14,14 @@ const pad = (n) => String(n).padStart(2, '0')
 const frontIndex = (v) => Math.min(COUNT - 1, Math.max(0, Math.round(-v / STEP)))
 
 // One stop on the ring. The outer div carries the 3D placement; the inner button only fades with how much it faces you.
+// Cards on the far side stay visible (dim, seen from behind) so you can see the whole circle, but only the near ones take taps.
 function Stop({ i, rot, onClick, label, children }) {
+  const facing = (r) => Math.cos(((i * STEP + r) * Math.PI) / 180)
   const opacity = useTransform(rot, (r) => {
-    const d = ((i * STEP + r) * Math.PI) / 180
-    return 0.3 + 0.7 * Math.max(0, Math.cos(d)) ** 1.4
+    const f = facing(r)
+    return f > 0 ? 0.4 + 0.6 * f ** 1.2 : 0.2 + 0.2 * (1 + f)
   })
+  const pointerEvents = useTransform(rot, (r) => (facing(r) > 0.25 ? 'auto' : 'none'))
   return (
     <div
       className="absolute left-1/2 top-1/2"
@@ -27,12 +30,10 @@ function Stop({ i, rot, onClick, label, children }) {
         height: 'calc(var(--w) * 0.66)',
         marginLeft: 'calc(var(--w) / -2)',
         marginTop: 'calc(var(--w) * -0.33)',
-        transform: `rotateY(${i * STEP}deg) translateZ(calc(var(--w) * 1.42))`,
-        backfaceVisibility: 'hidden',
-        WebkitBackfaceVisibility: 'hidden',
+        transform: `rotateY(${i * STEP}deg) translateZ(calc(var(--w) * var(--rk)))`,
       }}
     >
-      <motion.button type="button" onClick={onClick} aria-label={label} style={{ opacity }} className="group block h-full w-full text-left">
+      <motion.button type="button" onClick={onClick} aria-label={label} style={{ opacity, pointerEvents }} className="group block h-full w-full text-left">
         {children}
       </motion.button>
     </div>
@@ -151,15 +152,81 @@ function Backdrop() {
 
 function Ring({ onOpen }) {
   const ref = useRef(null)
+  const drag = useRef({ active: false, moved: false, suppress: false, x0: 0, s0: 0, lastX: 0, lastT: 0, v: 0 })
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] })
   const rot = useTransform(p, [0, PAD, 1 - PAD, 1], [0, 0, -(COUNT - 1) * STEP, -(COUNT - 1) * STEP])
 
-  const goTo = (i) => {
+  // The ring is driven by page scroll, so everything (buttons, dragging, snapping) just moves the page.
+  const metrics = () => {
     const el = ref.current
-    if (!el || i < 0 || i >= COUNT) return
     const start = el.getBoundingClientRect().top + window.scrollY
     const total = el.offsetHeight - window.innerHeight
-    window.scrollTo({ top: start + (PAD + (i / (COUNT - 1)) * (1 - 2 * PAD)) * total + 2, behavior: 'smooth' })
+    return { start, total, stop: (total * (1 - 2 * PAD)) / (COUNT - 1) }
+  }
+  const goTo = useCallback((i) => {
+    const el = ref.current
+    if (!el || i < 0 || i >= COUNT) return
+    const m = metrics()
+    window.scrollTo({ top: m.start + PAD * m.total + i * m.stop + 2, behavior: 'smooth' })
+  }, [])
+
+  // Which stop the page is scrolled to, as a fraction (0 = first, COUNT-1 = last).
+  const position = () => {
+    const m = metrics()
+    return (window.scrollY - m.start - PAD * m.total) / m.stop
+  }
+
+  // After scrolling stops, settle on the nearest site.
+  useEffect(() => {
+    let t
+    const onScroll = () => {
+      clearTimeout(t)
+      t = setTimeout(() => {
+        if (drag.current.active || !ref.current) return
+        const f = position()
+        if (f <= -0.6 || f >= COUNT - 1 + 0.6) return // resting at the ends, or scrolled away
+        const idx = Math.min(COUNT - 1, Math.max(0, Math.round(f)))
+        if (Math.abs(f - idx) > 0.03) goTo(idx)
+      }, 160)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      clearTimeout(t)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [goTo])
+
+  // Drag or swipe sideways to spin the ring; on release it settles on the nearest site (a flick carries it further).
+  const cardPx = () => Math.min(430, Math.max(220, window.innerWidth * 0.33))
+  const onPointerDown = (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return
+    drag.current = { active: true, moved: false, suppress: false, x0: e.clientX, s0: window.scrollY, lastX: e.clientX, lastT: e.timeStamp, v: 0 }
+  }
+  const onPointerMove = (e) => {
+    const d = drag.current
+    if (!d.active) return
+    const dx = e.clientX - d.x0
+    if (!d.moved) {
+      if (Math.abs(dx) < 7) return
+      d.moved = true
+      d.suppress = true
+      e.currentTarget.setPointerCapture?.(e.pointerId)
+    }
+    const dt = Math.max(1, e.timeStamp - d.lastT)
+    d.v = 0.8 * d.v + 0.2 * ((e.clientX - d.lastX) / dt)
+    d.lastX = e.clientX
+    d.lastT = e.timeStamp
+    const m = metrics()
+    window.scrollTo({ top: d.s0 - dx * (m.stop / cardPx()), behavior: 'instant' })
+  }
+  const endDrag = () => {
+    const d = drag.current
+    if (!d.active) return
+    d.active = false
+    if (!d.moved) return
+    const carry = Math.max(-2, Math.min(2, (-d.v * 160) / cardPx())) // flick: about 160 ms of momentum, at most two sites
+    const idx = Math.min(COUNT - 1, Math.max(0, Math.round(position() + carry)))
+    goTo(idx)
   }
 
   return (
@@ -168,14 +235,41 @@ function Ring({ onOpen }) {
         <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pt-16 sm:px-10 sm:pt-20">
           <p className="label text-acid">Selected work</p>
           <h2 className="display mt-2 text-3xl sm:text-5xl">Sites built for Bali businesses.</h2>
-          <p className="mt-2 hidden max-w-xl text-bone/65 sm:block">Scroll to turn the ring, tap a site to look closer.</p>
+          <p className="mt-2 max-w-xl text-bone/65">Drag or scroll to spin the ring. Tap a site to look closer.</p>
         </div>
 
-        <div className="relative min-h-0 flex-1" style={{ perspective: '1800px', '--w': 'clamp(220px, 33vw, 430px)' }}>
+        <div
+          className="ring-scope relative min-h-0 flex-1 cursor-grab select-none active:cursor-grabbing"
+          style={{ perspective: '1500px', touchAction: 'pan-y' }}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onClickCapture={(e) => {
+            if (drag.current.suppress) {
+              e.stopPropagation()
+              e.preventDefault()
+              drag.current.suppress = false
+            }
+          }}
+        >
           <Glow rot={rot} />
           <Backdrop />
-          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', transform: 'translateZ(calc(var(--w) * -1.42))' }}>
+          {/* the whole wheel is pushed back so the front card sits at depth 0, then tilted to look down on it a little */}
+          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', transform: 'translateY(calc(var(--w) * -0.13)) translateZ(calc(var(--w) * var(--rk) * -1)) rotateX(-9deg)' }}>
             <motion.div className="absolute inset-0 will-change-transform" style={{ transformStyle: 'preserve-3d', rotateY: rot }}>
+              {/* the orbit the cards travel on */}
+              <div
+                aria-hidden="true"
+                className="absolute left-1/2 top-1/2 rounded-full border border-dashed border-acid/30"
+                style={{
+                  width: 'calc(var(--w) * var(--rk) * 2)',
+                  height: 'calc(var(--w) * var(--rk) * 2)',
+                  marginLeft: 'calc(var(--w) * var(--rk) * -1)',
+                  marginTop: 'calc(var(--w) * var(--rk) * -1)',
+                  transform: 'translateY(calc(var(--w) * 0.42)) rotateX(90deg)',
+                }}
+              />
               {PROJECTS.map((project, i) => (
                 <Stop key={project.slug} i={i} rot={rot} onClick={() => onOpen(project)} label={`Open ${project.name}`}>
                   <ProjectFace project={project} i={i} />
