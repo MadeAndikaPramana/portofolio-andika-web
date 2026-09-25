@@ -167,7 +167,7 @@ export const STEPS = [
 ]
 
 export const OFFER = {
-  headline: 'Worth every rupiah.',
+  headline: 'Worth every dime.',
   promise: 'You see the site on your own phone before you pay, and I keep changing it until you are happy.',
   compare: 'Priced below what most agencies charge, and below what a website builder costs you once you add up a year or two of monthly fees.',
   negotiable: 'The price is negotiable. Tell me your budget and we will find something that works.',
@@ -235,3 +235,15 @@ export const WHY = [
   { title: 'Based in Bali', body: 'I live and work here. I know how people in Bali find a business and how they like to message it.' },
   { title: 'Demo first', body: 'You see a real page before you pay, so nothing is a guess.' },
 ]
+
+export const ABOUT = {
+  heading: 'Hi, I’m Andika.',
+  lead: 'I build websites for small businesses in Bali. I do the design, the code and the setup myself, so you talk to me the whole way, not to a team.',
+  more: 'I like pages that load fast, look good on a phone and end with a customer sending you a message. If you can show me a few photos and tell me what you sell, I can show you a real page to look at.',
+  facts: [
+    ['Based in', 'Bali'],
+    ['What I do', 'Websites for small businesses'],
+    ['We can talk in', 'Bahasa Indonesia or English'],
+    ['I build with', 'React, Vite, Tailwind, Motion'],
+  ],
+}

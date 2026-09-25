@@ -5,6 +5,7 @@ import Dock from './components/Dock'
 import Hero from './components/Hero'
 import Statement from './components/Statement'
 import Work from './components/Work'
+import About from './components/About'
 import Phones from './components/Phones'
 import Features from './components/Features'
 import Niches from './components/Niches'
@@ -32,6 +33,7 @@ export default function App() {
       <main>
         <Statement />
         <Work onOpen={setOpen} />
+        <About />
         <Phones onOpen={setOpen} />
         <Features />
         <Niches onOpen={setOpen} />

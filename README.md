@@ -15,8 +15,12 @@ Everything editable is in `src/data.js`.
 - [x] `ME.whatsappNumber` is set (business WhatsApp).
 - [ ] `ME.email` (the Email button only shows when this is set) and `ME.instagram`.
 - [ ] `live` on each demo once its Vercel deploy exists (zine-tattoo, night-tide-tattoo, golden-hour-tattoo, clear-quote-tattoo, one-long-scroll-yoga). Until then the sheet says "Live link coming soon".
-- [ ] Read the copy in `OFFER`, `FAQ` and `STEPS` once. No price is shown on purpose ("worth every rupiah", negotiable, domain not included, revisions until happy). The "cheaper than most agencies / builders" line is a claim about the market: check it still holds before launch.
+- [ ] Read the copy in `OFFER`, `FAQ` and `STEPS` once. No price is shown on purpose ("worth every dime", negotiable, domain not included, revisions until happy). The "cheaper than most agencies / builders" line is a claim about the market: check it still holds before launch.
 - [ ] Add a domain, then `og:image`, canonical URL and sitemap.
+
+## Photo
+
+`public/andika.webp` is the portrait in the About section (original in `raw/andika.jpg`, not committed). Swap it there.
 
 ## Who is in it
 
