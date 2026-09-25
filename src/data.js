@@ -141,7 +141,7 @@ export const PROJECTS = [
   },
 ]
 
-export const NICHES = ['Tattoo studios', 'Yoga studios', 'Counselling', 'Wellness', 'Local businesses']
+export const NICHES = ['Tattoo studios', 'Yoga studios', 'Counselling', 'Wellness', 'Cafés', 'Villas', 'Local shops', 'And many more']
 
 export const STEPS = [
   {
@@ -237,13 +237,22 @@ export const WHY = [
 ]
 
 export const ABOUT = {
-  heading: 'Hi, I’m Andika.',
-  lead: 'I build websites for small businesses in Bali. I do the design, the code and the setup myself, so you talk to me the whole way, not to a team.',
-  more: 'I like pages that load fast, look good on a phone and end with a customer sending you a message. If you can show me a few photos and tell me what you sell, I can show you a real page to look at.',
+  heading: 'I build cool websites.',
+  lead: 'Hey, I’m Andika. I make websites for small businesses in Bali, the kind that look good, load fast and get people messaging you.',
+  more: 'I do everything myself, from the design to the code to the launch, so you only ever talk to me. Send a few photos and tell me what you sell, and I’ll show you a real page to look at. No pressure.',
   facts: [
     ['Based in', 'Bali'],
-    ['What I do', 'Websites for small businesses'],
+    ['What I do', 'Cool websites for small businesses'],
     ['We can talk in', 'Bahasa Indonesia or English'],
-    ['I build with', 'React, Vite, Tailwind, Motion'],
+    ['I build with', 'React, Vite, Tailwind, Motion and many more'],
   ],
+}
+
+// The last stop on the project ring.
+export const MORE = {
+  name: '…and many more',
+  short: 'and many more',
+  line: 'Cafés, villas, salons, surf schools, shops. If it has customers, it can have a great website.',
+  hint: 'Cafés · Villas · Salons · Shops',
+  accent: '#d7ff3f',
 }

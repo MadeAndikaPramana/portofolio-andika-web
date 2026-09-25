@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
-import { ME, NICHES, WHATSAPP } from '../data'
-import { ArrowIcon, ChatIcon, jump } from './ui'
+import { NICHES } from '../data'
+import { ArrowIcon, jump } from './ui'
 
 const HEADLINE = ['Websites', 'that', 'make', 'people', 'message', 'you.']
 
@@ -40,10 +40,7 @@ export default function Hero() {
     <header id="top" onPointerMove={onMove} className="relative overflow-hidden px-5 pb-20 pt-24 sm:px-10 lg:min-h-svh lg:pb-28">
       <div aria-hidden="true" className="pointer-events-none absolute -right-40 top-10 h-[46rem] w-[46rem] rounded-full bg-[radial-gradient(circle,rgba(215,255,63,0.09)_0%,rgba(215,255,63,0)_65%)]" />
 
-      <div className="absolute inset-x-5 top-5 flex items-center justify-between sm:inset-x-10 sm:top-7">
-        <a href="#top" className="display text-2xl tracking-tight" aria-label={`${ME.name}, back to top`}>
-          {ME.name}<span className="text-acid">.</span>
-        </a>
+      <div className="absolute inset-x-5 top-5 flex items-center justify-end sm:inset-x-10 sm:top-7">
         <p className="label flex items-center gap-2 text-bone/70">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-acid opacity-70" />
@@ -55,7 +52,6 @@ export default function Hero() {
 
       <div className="mx-auto grid max-w-[88rem] items-center gap-12 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <p className="label mb-6 text-mute">{ME.role} · {ME.place}</p>
           <h1 className="display text-[clamp(3rem,9.4vw,6.6rem)]" aria-label={HEADLINE.join(' ')}>
             {HEADLINE.map((w, i) => (
               <span key={w + i} className="mr-[0.22em] inline-block overflow-hidden pb-[0.14em] align-bottom -mb-[0.14em]" aria-hidden="true">
@@ -88,10 +84,6 @@ export default function Hero() {
               See the work
               <ArrowIcon />
             </button>
-            <a href={WHATSAPP} target="_blank" rel="noreferrer" className="btn-ghost">
-              <ChatIcon className="h-4 w-4" />
-              Message me
-            </a>
           </motion.div>
         </div>
 

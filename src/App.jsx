@@ -31,9 +31,9 @@ export default function App() {
     <>
       <Hero />
       <main>
+        <About />
         <Statement />
         <Work onOpen={setOpen} />
-        <About />
         <Phones onOpen={setOpen} />
         <Features />
         <Niches onOpen={setOpen} />
