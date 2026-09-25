@@ -107,12 +107,12 @@ function Info({ rot, goTo, onOpen }) {
   const p = isMore ? null : PROJECTS[active]
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 pb-28 sm:flex-row sm:items-end sm:justify-between sm:px-10">
-      <div className="min-h-[7.5rem] sm:min-h-[8.5rem]">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pb-24 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:px-10 sm:pb-28">
+      <div className="min-h-[6.5rem] sm:min-h-[8.5rem]">
         <AnimatePresence mode="wait">
           <motion.div key={active} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.22 }}>
             <span className="label text-acid">{pad(active + 1)} / {pad(COUNT)}</span>
-            <h3 className="display mt-3 text-3xl sm:text-5xl">{isMore ? MORE.name : p.name}</h3>
+            <h3 className="display mt-2 text-[1.7rem] sm:mt-3 sm:text-5xl">{isMore ? MORE.name : p.name}</h3>
             <p className="mt-2 max-w-md text-bone/70">{isMore ? MORE.line : p.line}</p>
           </motion.div>
         </AnimatePresence>
@@ -235,14 +235,17 @@ function Ring({ onOpen }) {
   return (
     <section id="work" ref={ref} style={{ height: `${COUNT * 62 + 90}svh` }} className="relative">
       <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden">
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pt-16 sm:px-10 sm:pt-20">
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pt-14 sm:px-10 sm:pt-20">
           <p className="label text-acid">Selected work</p>
-          <h2 className="display mt-2 text-3xl sm:text-5xl">Sites built for Bali businesses.</h2>
-          <p className="mt-2 max-w-xl text-bone/65">Drag or scroll to spin the ring. Tap a site to look closer.</p>
+          <h2 className="display mt-2 text-[1.7rem] sm:text-5xl">Sites built for Bali businesses.</h2>
+          <p className="mt-2 max-w-xl text-sm text-bone/65 sm:text-base">
+            <span className="sm:hidden">Drag to spin. Tap to open.</span>
+            <span className="hidden sm:inline">Drag or scroll to spin the ring. Tap a site to look closer.</span>
+          </p>
         </div>
 
         <div
-          className="ring-scope relative min-h-0 flex-1 cursor-grab select-none active:cursor-grabbing"
+          className="ring-scope relative min-h-[15.5rem] flex-1 cursor-grab select-none active:cursor-grabbing"
           style={{ perspective: '1500px', touchAction: 'pan-y' }}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -259,7 +262,7 @@ function Ring({ onOpen }) {
           <Glow rot={rot} />
           <Backdrop />
           {/* the whole wheel is pushed back so the front card sits at depth 0, then tilted to look down on it a little */}
-          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', transform: 'translateY(calc(var(--w) * -0.2)) translateZ(calc(var(--w) * var(--rk) * -1)) rotateX(-9deg)' }}>
+          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', transform: 'translateY(calc(var(--w) * var(--lift))) translateZ(calc(var(--w) * var(--rk) * -1)) rotateX(-9deg)' }}>
             <motion.div className="absolute inset-0 will-change-transform" style={{ transformStyle: 'preserve-3d', rotateY: rot }}>
               {/* the orbit the cards travel on */}
               <div
@@ -284,7 +287,6 @@ function Ring({ onOpen }) {
             </motion.div>
           </div>
           <div aria-hidden="true" className="pointer-events-none absolute bottom-3 left-1/2 h-8 w-[62%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(ellipse,rgba(239,234,224,0.18),rgba(239,234,224,0)_70%)]" />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-ink to-transparent" />
         </div>
 
         <Info rot={rot} goTo={goTo} onOpen={onOpen} />

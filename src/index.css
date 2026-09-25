@@ -99,9 +99,10 @@ body {
 .ring-scope {
   --w: clamp(220px, 33vw, 430px);
   --rk: 1.5;
+  --lift: -0.02; /* how far the wheel is raised, as a multiple of the card width */
 }
 @media (min-width: 768px) {
-  .ring-scope { --rk: 1.95; }
+  .ring-scope { --rk: 1.95; --lift: -0.2; }
 }
 
 /* Little live demos inside the feature cards. Transform and opacity only, and still (fully visible) for reduced motion. */
