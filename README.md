@@ -32,6 +32,8 @@ Full-size captures live in `raw/` (not committed). `npm run shots` turns them in
 
 ## Notes
 
+- Background: a dot grid with a spotlight (`src/components/Background.jsx`). Dim dots are a static CSS pattern; a small canvas draws only the ~300 dots near the light, larger and brighter. The light follows the mouse and wanders by itself on phones or when the mouse is idle. Reduced motion gets a still frame. No blur, no blend modes.
+
 - The ring is CSS 3D (`rotateY` + `translateZ`) driven by scroll progress. It only moves `transform`, and the "which project is in front" state lives in a small leaf component so the ring does not re-render while spinning. Measured 60 fps with no long tasks on a desktop Mac; not yet measured on a real phone.
 - `prefers-reduced-motion` gets a plain grid instead of the pinned ring, plain phone grid, and static text; nothing pinned or spinning. Not yet tested in a browser.
 - Mobile screenshots are `raw/<slug>-mobile.png` (390x844 @2x); `npm run shots` makes the web versions.

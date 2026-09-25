@@ -15,11 +15,9 @@ import Faq from './components/Faq'
 import Why from './components/Why'
 import Contact from './components/Contact'
 import Sheet from './components/Sheet'
-import Background, { BgSwitch } from './components/Background'
+import Background from './components/Background'
 
 export default function App() {
-  const params = new URLSearchParams(window.location.search)
-  const [bg, setBg] = useState(params.get('bg') || 'auto')
   const [open, setOpen] = useState(null)
   const close = useCallback(() => setOpen(null), [])
   const step = useCallback((dir) => {
@@ -32,8 +30,7 @@ export default function App() {
 
   return (
     <>
-      <Background mode={bg} />
-      {params.has('bgpreview') && <BgSwitch mode={bg} setMode={setBg} />}
+      <Background />
       <Hero />
       <main>
         <About />
