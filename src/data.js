@@ -8,8 +8,8 @@ export const ME = {
   github: 'https://github.com/MadeAndikaPramana',
   whatsappNumber: '6281932200554', // digits only, with country code
   whatsappDisplay: '+62 819-3220-0554',
-  // TODO: fill these in before launch. The buttons still render without them.
-  email: '',
+  email: 'andika12505@gmail.com',
+  // TODO: add before launch if wanted. The button only shows when set.
   instagram: '',
 }
 
