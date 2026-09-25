@@ -13,15 +13,17 @@ const pad = (n) => String(n).padStart(2, '0')
 // Which stop is in front, from the ring's rotation.
 const frontIndex = (v) => Math.min(COUNT - 1, Math.max(0, Math.round(-v / STEP)))
 
-// One stop on the ring. The outer div carries the 3D placement; the inner button only fades with how much it faces you.
-// Cards on the far side stay visible (dim, seen from behind) so you can see the whole circle, but only the near ones take taps.
+// How many stops away from the front this card is right now (0 = in the spotlight, 1 = its neighbour, ...).
+const stopsFromFront = (i, r) => Math.abs(((((i * STEP + r + 180) % 360) + 360) % 360) - 180) / STEP
+
+// One stop on the ring. The outer div carries the 3D placement. The inner button is the spotlight effect: the card in front
+// grows and steps forward, its neighbours shrink and fade, and the ones after them fade further, all continuously as the ring turns.
+// Far cards stay faintly visible so the whole circle still reads, but only the near ones take taps.
 function Stop({ i, rot, onClick, label, children }) {
-  const facing = (r) => Math.cos(((i * STEP + r) * Math.PI) / 180)
-  const opacity = useTransform(rot, (r) => {
-    const f = facing(r)
-    return f > 0 ? 0.4 + 0.6 * f ** 1.2 : 0.2 + 0.2 * (1 + f)
-  })
-  const pointerEvents = useTransform(rot, (r) => (facing(r) > 0.25 ? 'auto' : 'none'))
+  const opacity = useTransform(rot, (r) => Math.max(0.14, 1 / (1 + 0.9 * stopsFromFront(i, r) ** 2)))
+  const scale = useTransform(rot, (r) => 1.2 - 0.3 * Math.min(1, stopsFromFront(i, r)))
+  const z = useTransform(rot, (r) => 70 * (1 - Math.min(1, stopsFromFront(i, r))))
+  const pointerEvents = useTransform(rot, (r) => (stopsFromFront(i, r) < 2.4 ? 'auto' : 'none'))
   return (
     <div
       className="absolute left-1/2 top-1/2"
@@ -31,9 +33,10 @@ function Stop({ i, rot, onClick, label, children }) {
         marginLeft: 'calc(var(--w) / -2)',
         marginTop: 'calc(var(--w) * -0.33)',
         transform: `rotateY(${i * STEP}deg) translateZ(calc(var(--w) * var(--rk)))`,
+        transformStyle: 'preserve-3d',
       }}
     >
-      <motion.button type="button" onClick={onClick} aria-label={label} style={{ opacity, pointerEvents }} className="group block h-full w-full text-left">
+      <motion.button type="button" onClick={onClick} aria-label={label} style={{ opacity, scale, z, pointerEvents }} className="group block h-full w-full text-left">
         {children}
       </motion.button>
     </div>
@@ -256,7 +259,7 @@ function Ring({ onOpen }) {
           <Glow rot={rot} />
           <Backdrop />
           {/* the whole wheel is pushed back so the front card sits at depth 0, then tilted to look down on it a little */}
-          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', transform: 'translateY(calc(var(--w) * -0.13)) translateZ(calc(var(--w) * var(--rk) * -1)) rotateX(-9deg)' }}>
+          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', transform: 'translateY(calc(var(--w) * -0.2)) translateZ(calc(var(--w) * var(--rk) * -1)) rotateX(-9deg)' }}>
             <motion.div className="absolute inset-0 will-change-transform" style={{ transformStyle: 'preserve-3d', rotateY: rot }}>
               {/* the orbit the cards travel on */}
               <div
