@@ -12,6 +12,7 @@ const ITEMS = [
   { id: 'work', label: 'Work', icon: <Svg><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></Svg> },
   { id: 'process', label: 'How it works', icon: <Svg><path d="M4 6h10M4 12h16M4 18h7" /></Svg> },
   { id: 'offer', label: 'Price', icon: <Svg><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" /><circle cx="7.5" cy="7.5" r="1" fill="currentColor" /></Svg> },
+  { id: 'faq', label: 'Questions', icon: <Svg><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></Svg> },
   { id: 'contact', label: 'Say hi', icon: <Svg><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></Svg> },
 ]
 

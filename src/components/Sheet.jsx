@@ -70,9 +70,9 @@ export default function Sheet({ project, onClose, onStep }) {
               ))}
             </ul>
 
-            {project.kind === 'concept' && (
+            {project.kind === 'demo' && (
               <p className="mt-5 text-sm leading-relaxed text-mute">
-                A concept: a made-up business built to show a style. Names, prices and reviews on it are placeholders.
+                A demo: a sample site built to show a style for this kind of business. The name, prices and reviews on it are placeholders.
               </p>
             )}
 

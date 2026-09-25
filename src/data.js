@@ -19,7 +19,7 @@ export const EMAIL = ME.email ? `mailto:${ME.email}` : null
 
 export const PRICE = { amount: 'Rp 2.000.000', note: 'One flat price for the whole site.' }
 
-// kind: 'client' = real business, published with the owner's permission; 'concept' = made-up business, built to show a style.
+// kind: 'client' = real business, published with the owner's permission; 'demo' = sample site for a made-up business, built to show a style.
 export const PROJECTS = [
   {
     slug: 'swordsman',
@@ -41,8 +41,8 @@ export const PROJECTS = [
     name: 'Zine Tattoo',
     short: 'Zine',
     niche: 'Tattoo studio',
-    place: 'Concept',
-    kind: 'concept',
+    place: 'Demo',
+    kind: 'demo',
     year: '2026',
     live: null,
     line: 'Loud, playful, paper-and-tape.',
@@ -56,8 +56,8 @@ export const PROJECTS = [
     name: 'Night Tide Tattoo',
     short: 'Night Tide',
     niche: 'Tattoo studio',
-    place: 'Concept',
-    kind: 'concept',
+    place: 'Demo',
+    kind: 'demo',
     year: '2026',
     live: null,
     line: 'Dark glass, ocean teal, a glowing hero.',
@@ -71,8 +71,8 @@ export const PROJECTS = [
     name: 'Golden Hour Tattoo',
     short: 'Golden Hour',
     niche: 'Tattoo studio',
-    place: 'Concept',
-    kind: 'concept',
+    place: 'Demo',
+    kind: 'demo',
     year: '2026',
     live: null,
     line: 'Calm, editorial, sunset serif.',
@@ -86,8 +86,8 @@ export const PROJECTS = [
     name: 'Clear Quote Tattoo',
     short: 'Clear Quote',
     niche: 'Tattoo studio',
-    place: 'Concept',
-    kind: 'concept',
+    place: 'Demo',
+    kind: 'demo',
     year: '2026',
     live: null,
     line: 'Built to turn visitors into messages.',
@@ -101,8 +101,8 @@ export const PROJECTS = [
     name: 'One Long Scroll Yoga',
     short: 'One Long Scroll',
     niche: 'Yoga studio',
-    place: 'Concept',
-    kind: 'concept',
+    place: 'Demo',
+    kind: 'demo',
     year: '2026',
     live: null,
     line: 'The whole studio, told in a single scroll.',
@@ -116,8 +116,8 @@ export const PROJECTS = [
     name: 'Ruang Napas',
     short: 'Ruang Napas',
     niche: 'Yoga studio',
-    place: 'Concept',
-    kind: 'concept',
+    place: 'Demo',
+    kind: 'demo',
     year: '2026',
     live: 'https://ruang-napas.vercel.app/',
     line: 'Warm sand and terracotta, moving with the day.',
@@ -131,8 +131,8 @@ export const PROJECTS = [
     name: 'Teduh',
     short: 'Teduh',
     niche: 'Counselling',
-    place: 'Concept',
-    kind: 'concept',
+    place: 'Demo',
+    kind: 'demo',
     year: '2026',
     live: 'https://teduh-six.vercel.app/',
     line: 'A quiet place to start, with a breathing exercise in the hero.',
@@ -177,3 +177,59 @@ export const OFFER = {
   ],
   excludes: 'The domain name (like yourbusiness.com) is not included.',
 }
+
+export const STATEMENT = {
+  words: 'Most people find a business on their phone, decide in a few seconds, then send a message. I build the whole site around those few seconds.',
+  accent: ['message.', 'few', 'seconds.'],
+}
+
+export const FEATURES = [
+  { title: 'Fast to open', body: 'Plain, light pages. No plugins and no slow page builder, so it opens quickly on a phone with weak signal.', icon: 'bolt' },
+  { title: 'Made for phones', body: 'Designed on a phone screen first, then stretched up to laptops. Not the other way round.', icon: 'phone' },
+  { title: 'One tap to message', body: 'A WhatsApp button that stays with people as they scroll, so asking is never more than one tap away.', icon: 'chat' },
+  { title: 'Shows your work', body: 'Photos, prices and your team, in the order people actually look for them.', icon: 'grid' },
+  { title: 'Easy to find', body: 'Opening hours, address and a map, right where people scroll to look for them.', icon: 'pin' },
+  { title: 'Sounds like you', body: 'Your words, your photos, your colours. You read it and think, yes, that is us.', icon: 'heart' },
+]
+
+export const NICHE_GROUPS = [
+  {
+    id: 'tattoo',
+    title: 'Tattoo studios',
+    line: 'Show the work first. Make the quote easy.',
+    body: 'People choose an artist by style, so the work and the artists come first, then prices, then one obvious button to ask for a quote.',
+    points: ['Portfolio by style', 'Artist pages', 'Clear price ranges', 'Quote on WhatsApp'],
+    slugs: ['swordsman', 'zine-tattoo', 'night-tide-tattoo', 'golden-hour-tattoo', 'clear-quote-tattoo'],
+  },
+  {
+    id: 'yoga',
+    title: 'Yoga studios',
+    line: 'Calm on the page, clear on the timetable.',
+    body: 'People want the class time, the price and the way to the door in a few seconds. The feel of the room comes next, and it matters too.',
+    points: ['Timetable at a glance', 'Class levels', 'Prices in plain numbers', 'Map and parking'],
+    slugs: ['one-long-scroll-yoga', 'ruang-napas'],
+  },
+  {
+    id: 'counselling',
+    title: 'Counselling',
+    line: 'Quiet, plain and honest.',
+    body: 'Nobody looks for help in a good mood. Soft light, plain words, clear fees, and a page that says what to do in a crisis.',
+    points: ['Plain language', 'Clear fees', 'Safety information', 'Gentle first step'],
+    slugs: ['teduh'],
+  },
+]
+
+export const FAQ = [
+  { q: 'How much does a website cost?', a: 'Rp 2.000.000 for the whole site, one flat price. The domain name (like yourbusiness.com) is not included.' },
+  { q: 'Can I see it before I pay?', a: 'Yes. I build a page you can open on your own phone first, so you can see what you are getting before you decide.' },
+  { q: 'What if I want changes?', a: 'Send me a message and I change it. Revisions are included until you are happy.' },
+  { q: 'What do you need from me?', a: 'A few photos, your prices, your opening hours, and your Instagram or Google Maps link. That is enough to start.' },
+  { q: 'Can customers contact me from the site?', a: 'Yes. Every site has a WhatsApp button, so people can message you in one tap.' },
+  { q: 'Do you speak Indonesian?', a: 'Ya. We can talk in Bahasa Indonesia or English, whichever is easier for you.' },
+]
+
+export const WHY = [
+  { title: 'One person, start to finish', body: 'You talk to me, and I build it. No agency, no account manager, no passing your message along.' },
+  { title: 'From here', body: `I am from Abuan, Bangli. I know how people in Bali find a business and how they like to message it.` },
+  { title: 'Demo first', body: 'You see a real page before you pay, so nothing is a guess.' },
+]

@@ -1,14 +1,22 @@
 import { motion, useReducedMotion } from 'motion/react'
 
-export function Reveal({ as = 'div', delay = 0, y = 24, className = '', children, ...rest }) {
+// Blocks appear one by one as you scroll to them. 'rise' fades up, 'pop' fades in while growing from slightly smaller.
+const VARIANTS = {
+  rise: { from: (y) => ({ opacity: 0, y }), to: { opacity: 1, y: 0 } },
+  pop: { from: () => ({ opacity: 0, y: 36, scale: 0.9 }), to: { opacity: 1, y: 0, scale: 1 } },
+  fade: { from: () => ({ opacity: 0 }), to: { opacity: 1 } },
+}
+
+export function Reveal({ as = 'div', variant = 'rise', delay = 0, y = 24, className = '', children, ...rest }) {
   const reduce = useReducedMotion()
   const Tag = motion[as]
+  const v = VARIANTS[variant]
   return (
     <Tag
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -8% 0px' }}
-      transition={{ duration: 0.7, delay, ease: [0.2, 0.7, 0.2, 1] }}
+      initial={reduce ? false : v.from(y)}
+      whileInView={v.to}
+      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+      transition={variant === 'pop' ? { type: 'spring', stiffness: 170, damping: 20, delay } : { duration: 0.75, delay, ease: [0.2, 0.7, 0.2, 1] }}
       className={className}
       {...rest}
     >
@@ -40,7 +48,7 @@ export function Kind({ kind }) {
   return (
     <span className={`label inline-flex items-center gap-2 rounded-full border px-3 py-1 ${client ? 'border-acid bg-acid text-ink' : 'border-bone/25 text-bone/80'}`}>
       <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${client ? 'bg-ink' : 'bg-bone/60'}`} />
-      {client ? 'Real client' : 'Concept'}
+      {client ? 'Live client site' : 'Demo'}
     </span>
   )
 }

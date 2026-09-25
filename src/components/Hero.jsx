@@ -96,8 +96,8 @@ export default function Hero() {
         </div>
 
         <div className="relative mx-auto h-[300px] w-full max-w-md sm:h-[380px] lg:col-span-5 lg:h-[600px] lg:max-w-none" aria-hidden={false}>
-          <FanCard src="/work/one-long-scroll-yoga.webp" alt="One Long Scroll Yoga, a concept website" rotate={7} left="30%" top="0%" depth={34} sx={sx} sy={sy} delay={0.5} z={1} />
-          <FanCard src="/work/night-tide-tattoo.webp" alt="Night Tide Tattoo, a concept website" rotate={-5} left="8%" top="22%" depth={18} sx={sx} sy={sy} delay={0.62} z={2} />
+          <FanCard src="/work/one-long-scroll-yoga.webp" alt="One Long Scroll Yoga, a demo website" rotate={7} left="30%" top="0%" depth={34} sx={sx} sy={sy} delay={0.5} z={1} />
+          <FanCard src="/work/night-tide-tattoo.webp" alt="Night Tide Tattoo, a demo website" rotate={-5} left="8%" top="22%" depth={18} sx={sx} sy={sy} delay={0.62} z={2} />
           <FanCard src="/work/swordsman.webp" alt="Swordsman Tattoo Studio website" rotate={2} left="22%" top="44%" depth={6} sx={sx} sy={sy} delay={0.74} z={3} />
         </div>
       </div>

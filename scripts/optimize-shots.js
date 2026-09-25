@@ -4,6 +4,7 @@ import sharp from 'sharp'
 
 for (const f of readdirSync('raw').filter((n) => n.endsWith('.png'))) {
   const name = f.replace('.png', '')
-  await sharp(`raw/${f}`).resize(1200).webp({ quality: 88, smartSubsample: true }).toFile(`public/work/${name}.webp`)
+  const width = name.endsWith('-mobile') ? 520 : 1200
+  await sharp(`raw/${f}`).resize(width).webp({ quality: 88, smartSubsample: true }).toFile(`public/work/${name}.webp`)
   console.log('✓', name)
 }

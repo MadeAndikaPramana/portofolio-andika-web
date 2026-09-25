@@ -3,9 +3,15 @@ import { AnimatePresence } from 'motion/react'
 import { PROJECTS } from './data'
 import Dock from './components/Dock'
 import Hero from './components/Hero'
-import Work, { Index } from './components/Work'
+import Statement from './components/Statement'
+import Work from './components/Work'
+import Phones from './components/Phones'
+import Features from './components/Features'
+import Niches from './components/Niches'
 import Process from './components/Process'
 import Offer from './components/Offer'
+import Faq from './components/Faq'
+import Why from './components/Why'
 import Contact from './components/Contact'
 import Sheet from './components/Sheet'
 
@@ -24,10 +30,15 @@ export default function App() {
     <>
       <Hero />
       <main>
+        <Statement />
         <Work onOpen={setOpen} />
-        <Index onOpen={setOpen} />
+        <Phones onOpen={setOpen} />
+        <Features />
+        <Niches onOpen={setOpen} />
         <Process />
         <Offer />
+        <Faq />
+        <Why />
       </main>
       <Contact />
       <Dock />

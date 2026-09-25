@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { AnimatePresence, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { PROJECTS } from '../data'
-import { ArrowIcon, Kind, Reveal } from './ui'
+import { ArrowIcon, Kind } from './ui'
 
 const N = PROJECTS.length
 const STEP = 360 / N
@@ -84,8 +84,8 @@ function Ring({ onOpen }) {
       <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden">
         <div className="mx-auto w-full max-w-6xl px-5 pt-16 sm:px-10 sm:pt-20">
           <p className="label text-acid">Selected work</p>
-          <h2 className="display mt-2 text-3xl sm:text-5xl">One real client. Seven concepts.</h2>
-          <p className="mt-2 hidden max-w-xl text-bone/65 sm:block">Scroll to turn the ring. A concept is a made-up business I designed to show a style.</p>
+          <h2 className="display mt-2 text-3xl sm:text-5xl">Sites built for Bali businesses.</h2>
+          <p className="mt-2 hidden max-w-xl text-bone/65 sm:block">Scroll to turn the ring, tap a site to look closer.</p>
         </div>
 
         <div className="relative min-h-0 flex-1" style={{ perspective: '1800px', '--w': 'clamp(220px, 33vw, 430px)' }}>
@@ -110,8 +110,8 @@ function Grid({ onOpen }) {
   return (
     <section id="work" className="mx-auto max-w-6xl px-5 py-24 sm:px-10">
       <p className="label text-acid">Selected work</p>
-      <h2 className="display mt-2 text-4xl sm:text-5xl">One real client. Seven concepts.</h2>
-      <p className="mt-3 max-w-xl text-bone/65">A concept is a made-up business I designed to show a style.</p>
+      <h2 className="display mt-2 text-4xl sm:text-5xl">Sites built for Bali businesses.</h2>
+      <p className="mt-3 max-w-xl text-bone/65">Tap a site to look closer.</p>
       <ul className="mt-10 grid gap-5 sm:grid-cols-2">
         {PROJECTS.map((p, i) => (
           <li key={p.slug}>
@@ -125,76 +125,6 @@ function Grid({ onOpen }) {
           </li>
         ))}
       </ul>
-    </section>
-  )
-}
-
-// A plain index of everything, with a preview that follows the pointer on desktop.
-export function Index({ onOpen }) {
-  const [hover, setHover] = useState(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const sx = useSpring(x, { stiffness: 260, damping: 30, mass: 0.5 })
-  const sy = useSpring(y, { stiffness: 260, damping: 30, mass: 0.5 })
-  const [fine] = useState(() => typeof window !== 'undefined' && window.matchMedia?.('(hover: hover) and (pointer: fine)').matches)
-  const current = PROJECTS.find((p) => p.slug === hover)
-
-  return (
-    <section id="index" className="mx-auto max-w-6xl px-5 pb-28 pt-16 sm:px-10">
-      <Reveal as="p" className="label text-acid">Everything, in a list</Reveal>
-      <ul
-        className="mt-6 border-t border-bone/15"
-        onPointerMove={(e) => {
-          x.set(e.clientX + 28)
-          y.set(e.clientY - 110)
-        }}
-        onPointerLeave={() => setHover(null)}
-      >
-        {PROJECTS.map((p, i) => (
-          <li key={p.slug}>
-            <button
-              type="button"
-              onClick={() => onOpen(p)}
-              onPointerEnter={(e) => {
-                if (!hover) {
-                  x.set(e.clientX + 28)
-                  y.set(e.clientY - 110)
-                  sx.jump(x.get())
-                  sy.jump(y.get())
-                }
-                setHover(p.slug)
-              }}
-              onFocus={() => setHover(p.slug)}
-              onBlur={() => setHover(null)}
-              className="group grid w-full grid-cols-[2.2rem_1fr_auto] items-center gap-3 border-b border-bone/15 py-5 text-left transition-colors hover:bg-bone/[0.03] sm:grid-cols-[3.5rem_1.4fr_1fr_auto_2rem] sm:py-6"
-            >
-              <span className="label text-mute">{pad(i + 1)}</span>
-              <span className="display text-2xl transition-transform duration-300 group-hover:translate-x-2 sm:text-4xl">{p.name}</span>
-              <span className="label hidden text-mute sm:block">{p.niche}{p.kind === 'client' ? ` · ${p.place}` : ''}</span>
-              <span className="label text-mute">{p.kind === 'client' ? 'Client' : 'Concept'}</span>
-              <span className="hidden text-acid opacity-0 transition-opacity group-hover:opacity-100 sm:block"><ArrowIcon className="h-5 w-5" /></span>
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      {fine && (
-        <AnimatePresence>
-          {current && (
-            <motion.div
-              key="preview"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.18 }}
-              style={{ x: sx, y: sy }}
-              className="pointer-events-none fixed left-0 top-0 z-30 w-[340px] overflow-hidden rounded-xl border border-bone/20 bg-coal shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]"
-            >
-              <img src={`/work/${current.slug}.webp`} alt="" width="1200" height="750" className="block aspect-[16/10] w-full object-cover object-top" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      )}
     </section>
   )
 }
