@@ -55,7 +55,7 @@ export default function Hero() {
 
       <div className="mx-auto grid max-w-[88rem] items-center gap-12 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <p className="label mb-6 text-mute">{ME.role} · {ME.place} · from {ME.origin}</p>
+          <p className="label mb-6 text-mute">{ME.role} · {ME.place}</p>
           <h1 className="display text-[clamp(3rem,9.4vw,6.6rem)]" aria-label={HEADLINE.join(' ')}>
             {HEADLINE.map((w, i) => (
               <span key={w + i} className="mr-[0.22em] inline-block overflow-hidden pb-[0.14em] align-bottom -mb-[0.14em]" aria-hidden="true">

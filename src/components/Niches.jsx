@@ -9,9 +9,8 @@ function Thumb({ project, onOpen, tall }) {
   return (
     <button type="button" onClick={() => onOpen(project)} aria-label={`Open ${project.name}`} className="group relative block overflow-hidden rounded-xl border border-bone/12 bg-ink text-left transition-colors hover:border-acid">
       <img src={`/work/${project.slug}.webp`} alt="" width="1200" height="750" loading="lazy" className={`block w-full object-cover object-top transition-transform duration-500 group-hover:scale-105 ${tall ? 'aspect-[4/3]' : 'aspect-[16/10]'}`} />
-      <span className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-ink/95 to-transparent px-3 pb-2 pt-8">
+      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/95 to-transparent px-3 pb-2 pt-8">
         <span className="text-sm font-semibold">{project.short}</span>
-        {project.kind === 'client' && <span className="label rounded-full bg-acid px-2 py-0.5 text-[0.6rem] text-ink">Live</span>}
       </span>
     </button>
   )

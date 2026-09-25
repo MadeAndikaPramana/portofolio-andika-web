@@ -12,10 +12,10 @@ npm run build
 
 Everything editable is in `src/data.js`.
 
-- [ ] `ME.whatsappNumber` (digits with country code, e.g. `6281234567890`). Until it is set, the WhatsApp buttons open `wa.me/` with no number.
+- [x] `ME.whatsappNumber` is set (business WhatsApp).
 - [ ] `ME.email` (the Email button only shows when this is set) and `ME.instagram`.
 - [ ] `live` on each demo once its Vercel deploy exists (zine-tattoo, night-tide-tattoo, golden-hour-tattoo, clear-quote-tattoo, one-long-scroll-yoga). Until then the sheet says "Live link coming soon".
-- [ ] Read the copy in `OFFER` and `STEPS` once: the price (Rp 2.000.000, domain excluded, revisions until happy) comes from the current quote, the rest is wording.
+- [ ] Read the copy in `OFFER`, `FAQ` and `STEPS` once. No price is shown on purpose ("worth every rupiah", negotiable, domain not included, revisions until happy). The "cheaper than most agencies / builders" line is a claim about the market: check it still holds before launch.
 - [ ] Add a domain, then `og:image`, canonical URL and sitemap.
 
 ## Who is in it

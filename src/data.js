@@ -5,10 +5,10 @@ export const ME = {
   full: 'Made Andika Pramana',
   role: 'Web developer',
   place: 'Bali',
-  origin: 'Abuan, Bangli',
   github: 'https://github.com/MadeAndikaPramana',
+  whatsappNumber: '6281932200554', // digits only, with country code
+  whatsappDisplay: '+62 819-3220-0554',
   // TODO: fill these in before launch. The buttons still render without them.
-  whatsappNumber: '', // digits only, with country code, e.g. 6281234567890
   email: '',
   instagram: '',
 }
@@ -16,8 +16,6 @@ export const ME = {
 const waText = encodeURIComponent('Hi Andika, I saw your portfolio and I would like a website for my business.')
 export const WHATSAPP = ME.whatsappNumber ? `https://wa.me/${ME.whatsappNumber}?text=${waText}` : 'https://wa.me/'
 export const EMAIL = ME.email ? `mailto:${ME.email}` : null
-
-export const PRICE = { amount: 'Rp 2.000.000', note: 'One flat price for the whole site.' }
 
 // kind: 'client' = real business, published with the owner's permission; 'demo' = sample site for a made-up business, built to show a style.
 export const PROJECTS = [
@@ -169,6 +167,10 @@ export const STEPS = [
 ]
 
 export const OFFER = {
+  headline: 'Worth every rupiah.',
+  promise: 'You see the site on your own phone before you pay, and I keep changing it until you are happy.',
+  compare: 'Priced below what most agencies charge, and below what a website builder costs you once you add up a year or two of monthly fees.',
+  negotiable: 'The price is negotiable. Tell me your budget and we will find something that works.',
   includes: [
     'A full website designed for phones first',
     'A WhatsApp button so customers can message you in one tap',
@@ -220,7 +222,7 @@ export const NICHE_GROUPS = [
 ]
 
 export const FAQ = [
-  { q: 'How much does a website cost?', a: 'Rp 2.000.000 for the whole site, one flat price. The domain name (like yourbusiness.com) is not included.' },
+  { q: 'How much does a website cost?', a: 'Less than most agencies charge, and the price is negotiable. I tell you the exact number before you decide. The domain name (like yourbusiness.com) is not included.' },
   { q: 'Can I see it before I pay?', a: 'Yes. I build a page you can open on your own phone first, so you can see what you are getting before you decide.' },
   { q: 'What if I want changes?', a: 'Send me a message and I change it. Revisions are included until you are happy.' },
   { q: 'What do you need from me?', a: 'A few photos, your prices, your opening hours, and your Instagram or Google Maps link. That is enough to start.' },
@@ -230,6 +232,6 @@ export const FAQ = [
 
 export const WHY = [
   { title: 'One person, start to finish', body: 'You talk to me, and I build it. No agency, no account manager, no passing your message along.' },
-  { title: 'From here', body: `I am from Abuan, Bangli. I know how people in Bali find a business and how they like to message it.` },
+  { title: 'Based in Bali', body: 'I live and work here. I know how people in Bali find a business and how they like to message it.' },
   { title: 'Demo first', body: 'You see a real page before you pay, so nothing is a guess.' },
 ]

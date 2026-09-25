@@ -42,13 +42,3 @@ export function ArrowIcon({ className = 'h-4 w-4' }) {
     </svg>
   )
 }
-
-export function Kind({ kind }) {
-  const client = kind === 'client'
-  return (
-    <span className={`label inline-flex items-center gap-2 rounded-full border px-3 py-1 ${client ? 'border-acid bg-acid text-ink' : 'border-bone/25 text-bone/80'}`}>
-      <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${client ? 'bg-ink' : 'bg-bone/60'}`} />
-      {client ? 'Live client site' : 'Demo'}
-    </span>
-  )
-}

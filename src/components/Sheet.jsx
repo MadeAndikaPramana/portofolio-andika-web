@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'motion/react'
 import { PROJECTS } from '../data'
-import { ArrowIcon, Kind } from './ui'
+import { ArrowIcon } from './ui'
 
 export default function Sheet({ project, onClose, onStep }) {
   const closeRef = useRef(null)
@@ -57,8 +57,7 @@ export default function Sheet({ project, onClose, onStep }) {
               </button>
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center gap-2">
-              <Kind kind={project.kind} />
+            <div className="mt-5">
               <span className="label text-mute">{project.niche}{project.kind === 'client' ? ` · ${project.place}` : ''}</span>
             </div>
             <h3 className="display mt-4 text-4xl sm:text-5xl">{project.name}</h3>

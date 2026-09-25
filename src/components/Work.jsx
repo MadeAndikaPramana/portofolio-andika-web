@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { PROJECTS } from '../data'
-import { ArrowIcon, Kind } from './ui'
+import { ArrowIcon } from './ui'
 
 const N = PROJECTS.length
 const STEP = 360 / N
@@ -45,10 +45,7 @@ function Info({ rot, goTo, onOpen }) {
       <div className="min-h-[7.5rem] sm:min-h-[8.5rem]">
         <AnimatePresence mode="wait">
           <motion.div key={p.slug} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.22 }}>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="label text-acid">{pad(active + 1)} / {pad(N)}</span>
-              <Kind kind={p.kind} />
-            </div>
+            <span className="label text-acid">{pad(active + 1)} / {pad(N)}</span>
             <h3 className="display mt-3 text-3xl sm:text-5xl">{p.name}</h3>
             <p className="mt-2 max-w-md text-bone/70">{p.line}</p>
           </motion.div>
