@@ -57,7 +57,7 @@ export const PROJECTS = [
     place: 'Demo',
     kind: 'demo',
     year: '2026',
-    live: null,
+    live: 'https://seamless-concept.vercel.app/',
     line: 'Dark glass, ocean teal, a glowing hero.',
     story:
       'A premium, night-time feel. A bento layout, glass panels and a slow teal glow, with every section one tap away from a message.',
@@ -102,7 +102,7 @@ export const PROJECTS = [
     place: 'Demo',
     kind: 'demo',
     year: '2026',
-    live: null,
+    live: 'https://arrive-theta-lake.vercel.app/',
     line: 'The whole studio, told in a single scroll.',
     story:
       'Ten chapters, no menu needed. A breathing circle that follows your scroll, a stack of class cards, a timetable, prices and a route to the door, ending with everything on one page.',
@@ -138,6 +138,21 @@ export const PROJECTS = [
       'For a counselling practice, calm matters more than flash. Soft light, plain words, clear fees and a safety page that says what to do in a crisis.',
     stack: ['React', 'Motion', 'Tailwind'],
     accent: '#c9714a',
+  },
+  {
+    slug: 'lumira-resort',
+    name: 'Lumira Resort Ubud',
+    short: 'Lumira Resort',
+    niche: 'Resort / villa',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: 'https://lumiraresort.vercel.app/',
+    line: 'A booking-engine hotel site, minus the bloat.',
+    story:
+      'A fictional Ubud resort, built to match the feel of a real booking-engine page: a hero video, villas, a candlelit restaurant, a spa and a photo gallery. Same motion, a fraction of the weight.',
+    stack: ['React', 'Motion', 'Tailwind'],
+    accent: '#4d6478',
   },
 ]
 
