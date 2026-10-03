@@ -21,7 +21,8 @@ const waText = encodeURIComponent('Hi Andika, I saw your portfolio and I would l
 export const WHATSAPP = ME.whatsappNumber ? `https://wa.me/${ME.whatsappNumber}?text=${waText}` : 'https://wa.me/'
 export const EMAIL = ME.email ? `mailto:${ME.email}` : null
 
-// kind: 'client' = real business, published with the owner's permission; 'demo' = sample site for a made-up business, built to show a style.
+// kind: 'client' = real business, published with the owner's permission; 'demo' = sample site built to show a style.
+// private: true = an anonymised concept for a real business that has not approved being named (no live link, ever).
 export const PROJECTS = [
   {
     slug: 'swordsman',
@@ -93,6 +94,84 @@ export const PROJECTS = [
       'Prices up front, a story viewer, a straight FAQ and a chat button that follows you down the page. Designed around one job: get the enquiry.',
     stack: ['React', 'Motion', 'Tailwind'],
   },
+  // Anonymised concepts: built (unasked) for real Bali businesses that have not approved being shown. Names here are
+  // invented, the screenshots had the real name, logo, artists and review counts swapped out, and there is never a
+  // live link. If an owner approves, swap in their real name and site; until then keep them anonymous.
+  {
+    slug: 'concrete-wall-tattoo',
+    name: 'Concrete Wall Tattoo',
+    short: 'Concrete Wall',
+    niche: 'Tattoo & piercing',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: null,
+    private: true, // anonymised concept, see the note above
+    line: 'Grey concrete, photos pinned to the wall like prints.',
+    story:
+      'Built around how the studio already photographs its work: phone shots against one grey wall. So the page is micro-cement grey with charcoal blocks, prints taped up in the hero, and a piercing menu people can read before they walk in.',
+    stack: ['React', 'Motion', 'Tailwind'],
+  },
+  {
+    slug: 'gold-leaf-tattoo',
+    name: 'Gold Leaf Tattoo',
+    short: 'Gold Leaf',
+    niche: 'Tattoo studio',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: null,
+    private: true, // anonymised concept, see the note above
+    line: 'Warm black and antique gold, a wall of work up front.',
+    story:
+      'A dark, confident studio page where the work does the talking: a grid of tattoos right in the hero, gold accents, a clean-and-safe section for first-timers and one button to book on WhatsApp.',
+    stack: ['React', 'Motion', 'Tailwind'],
+  },
+  {
+    slug: 'grey-wash-tattoo',
+    name: 'Grey Wash Tattoo',
+    short: 'Grey Wash',
+    niche: 'Tattoo studio',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: null,
+    private: true, // anonymised concept, see the note above
+    line: 'Black and grey, an editorial serif, every photo in mono.',
+    story:
+      'A calm, editorial site for a fine-line studio: a big serif headline, a portfolio you can filter by style, a quote form that asks the right questions and aftercare written in plain words. Several pages, built with Astro.',
+    stack: ['Astro', 'React islands', 'Tailwind'],
+  },
+  {
+    slug: 'old-school-tattoo',
+    name: 'Old School Tattoo',
+    short: 'Old School',
+    niche: 'Tattoo & piercing',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: null,
+    private: true, // anonymised concept, see the note above
+    line: 'Heavy slab type, warm rust and a live open-or-closed clock.',
+    story:
+      'Old-school attitude on a modern page: chunky slab headlines, a badge that tells you if the studio is open right now, a quote builder and a sticky WhatsApp and directions bar on phones.',
+    stack: ['Astro', 'React islands', 'Tailwind'],
+  },
+  {
+    slug: 'coffee-and-ink',
+    name: 'Coffee & Ink',
+    short: 'Coffee & Ink',
+    niche: 'Tattoo studio & coffee bar',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: null,
+    private: true, // anonymised concept, see the note above
+    line: 'Paper, tape and stickers, with a coffee bar on the side.',
+    story:
+      'For a studio that is also a coffee bar: a loud zine look in cobalt, a ticker of styles, artist pages and a small admin panel so the owner can add new work without calling me.',
+    stack: ['React', 'Motion', 'Admin panel'],
+  },
   {
     slug: 'one-long-scroll-yoga',
     name: 'One Long Scroll Yoga',
@@ -148,6 +227,36 @@ export const PROJECTS = [
     story:
       'A fictional Ubud resort, built to match the feel of a real booking-engine page: a hero video, villas, a candlelit restaurant, a spa and a photo gallery. Same motion, a fraction of the weight.',
     stack: ['React', 'Motion', 'Tailwind'],
+  },
+  {
+    slug: 'garden-collective',
+    name: 'Garden Collective',
+    short: 'Garden Collective',
+    niche: 'Café & venue',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: null,
+    private: true, // anonymised concept, see the note above
+    line: 'A café, live music and a gym in one garden, with what is on today.',
+    story:
+      'One site for a venue that is really five businesses: a café, live music, a gym, a shop and a grill. It knows what time it is, so it shows what is open and what is on tonight, with the menu and the week ahead a tap away.',
+    stack: ['Astro', 'React islands', 'Tailwind'],
+  },
+  {
+    slug: 'first-wave-surf',
+    name: 'First Wave Surf School',
+    short: 'First Wave',
+    niche: 'Surf school & beach bar',
+    place: 'Demo',
+    kind: 'demo',
+    year: '2026',
+    live: null,
+    private: true, // anonymised concept, see the note above
+    line: 'Never surfed? A hero video of the break and a lesson in two taps.',
+    story:
+      'For a beginner surf school with a beach bar: a video of the break, three lessons with clear prices, board rental, today\'s surf conditions and a first-lesson guide that answers every nervous question.',
+    stack: ['Astro', 'React islands', 'Cloudflare'],
   },
 ]
 
@@ -229,7 +338,7 @@ export const NICHE_GROUPS = [
     line: 'Show the work first. Make the quote easy.',
     body: 'People choose an artist by style, so the work and the artists come first, then prices, then one obvious button to ask for a quote.',
     points: ['Portfolio by style', 'Artist pages', 'Clear price ranges', 'Quote on WhatsApp'],
-    slugs: ['swordsman', 'zine-tattoo', 'night-tide-tattoo', 'golden-hour-tattoo', 'clear-quote-tattoo'],
+    slugs: ['swordsman', 'grey-wash-tattoo', 'old-school-tattoo', 'gold-leaf-tattoo', 'concrete-wall-tattoo'],
   },
   {
     id: 'yoga',
@@ -246,6 +355,14 @@ export const NICHE_GROUPS = [
     body: 'Nobody looks for help in a good mood. Soft light, plain words, clear fees, and a page that says what to do in a crisis.',
     points: ['Plain language', 'Clear fees', 'Safety information', 'Gentle first step'],
     slugs: ['teduh'],
+  },
+  {
+    id: 'venues',
+    title: 'Cafés, venues & surf',
+    line: 'What is open, what is on, and how to get there.',
+    body: 'People want to know if you are open right now, what is happening tonight and how to book. The page answers that first, then lets the place sell itself.',
+    points: ['Open right now', 'What is on this week', 'Menus and prices', 'Book or get directions'],
+    slugs: ['garden-collective', 'first-wave-surf', 'lumira-resort'],
   },
 ]
 

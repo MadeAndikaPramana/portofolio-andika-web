@@ -56,7 +56,7 @@ function Info({ active, goTo, onOpen }) {
         <span aria-hidden="true" className="display outline-text hidden text-[7.5rem] !leading-[0.78] tabular-nums md:block">{pad(active + 1)}</span>
         <AnimatePresence mode="wait">
           <motion.div key={active} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.22 }}>
-            <span className="label text-fg/50">{pad(active + 1)} / {pad(COUNT)}{isMore ? '' : ` · ${p.niche}${p.kind === 'demo' ? ' · Demo' : ''}`}</span>
+            <span className="label text-fg/50">{pad(active + 1)} / {pad(COUNT)}{isMore ? '' : ` · ${p.niche}${p.private ? ' · Concept' : p.kind === 'demo' ? ' · Demo' : ''}`}</span>
             <h3 className="display mt-2 text-[1.9rem] sm:text-5xl">{isMore ? MORE.name : p.name}</h3>
             <p className="mt-2 max-w-md text-fg/65">{isMore ? MORE.line : p.line}</p>
           </motion.div>
@@ -173,7 +173,7 @@ function Strip({ onOpen }) {
   }, [goTo])
 
   return (
-    <section id="work" data-theme="dark" ref={ref} style={{ height: `${COUNT * 55 + 100}svh` }} className="relative">
+    <section id="work" data-theme="dark" ref={ref} style={{ height: `${COUNT * 38 + 100}svh` }} className="relative">
       <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden py-10 lg:py-14" style={{ '--pw': 'min(56vw, 52svh * 1.6, 920px)' }}>
         <div className="mx-auto w-full max-w-6xl px-10">
           <Heading hint="Keep scrolling to move along. Click a site to look closer." />

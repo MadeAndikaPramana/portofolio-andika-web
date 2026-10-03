@@ -71,7 +71,9 @@ export default function Sheet({ project, onClose, onStep }) {
 
             {project.kind === 'demo' && (
               <p className="mt-5 text-sm leading-relaxed text-ink/55">
-                A demo: a sample site built to show a style for this kind of business. The name, prices and reviews on it are placeholders.
+                {project.private
+                  ? 'A private concept, shown without the business’s name. The name, prices and reviews in the picture are placeholders.'
+                  : 'A demo: a sample site built to show a style for this kind of business. The name, prices and reviews on it are placeholders.'}
               </p>
             )}
 
@@ -82,7 +84,7 @@ export default function Sheet({ project, onClose, onStep }) {
                   <ArrowIcon />
                 </a>
               ) : (
-                <span className="label rounded-full border border-dashed border-ink/25 px-4 py-3 text-ink/55">Live link coming soon</span>
+                <span className="label rounded-full border border-dashed border-ink/25 px-4 py-3 text-ink/55">{project.private ? 'Private concept' : 'Live link coming soon'}</span>
               )}
               <div className="ml-auto flex gap-2">
                 <button type="button" onClick={() => onStep(-1)} aria-label="Previous project" className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/25 transition-colors hover:bg-ink hover:text-paper">←</button>

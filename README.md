@@ -29,7 +29,11 @@ Everything editable is in `src/data.js`.
 
 ## Who is in it
 
-Swordsman (owner approved) plus eight neutral demos (`kind: 'demo'`, labelled as demos on the site). Only work the owner has approved, plus neutral demos, appears here. Do not add anything else without permission.
+Swordsman (owner approved), eight neutral demos (`kind: 'demo'`, labelled as demos on the site), and seven anonymised concepts (`private: true`, labelled "Concept").
+
+The anonymised concepts were built unasked for real businesses that have not approved being shown, so they appear under invented names (Concrete Wall, Gold Leaf, Grey Wash, Old School, Coffee & Ink, Garden Collective, First Wave) with no live link. Their screenshots were taken with the real name, logo marks, artist names, real review counts, slogans and street addresses swapped out on the page before capture. Only stock (Unsplash / Mixkit) photos are visible in them. If an owner approves, swap in their real name and site; until then keep them anonymous. The Segara Ink concept is left out on purpose: its tattoo photos are not stock and have no recorded source.
+
+Do not add anything else without permission.
 
 ## Screenshots
 
