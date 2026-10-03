@@ -1,27 +1,40 @@
 import { useEffect, useRef } from 'react'
 
-const SPACING = 28 // px between dots
-const RADIUS = 250 // reach of the spotlight, in px
-const BONE = [239, 234, 224]
-const ACID = [215, 255, 63]
+const SPACING = 26 // px between dots
+const RADIUS = 220 // reach of the cursor, in px
+const PUSH = 14 // how far the nearest dots are pushed away, in px
 
-// A dot grid with a spotlight. Dim dots cover the page (a static CSS pattern); a small canvas draws only the
-// few hundred dots near the spotlight, bigger and brighter. The light follows the mouse and wanders on its own
-// on phones or when the mouse is idle. It never touches the page's layout, and reduced motion gets a still frame.
+// The card's dot grid, behind the whole page. Dim dots are a static CSS pattern in the page's type colour, so they
+// flip with the theme on their own. A small canvas draws only the few hundred dots near the light: bigger, brighter,
+// and nudged away from the mouse like iron filings. The light wanders by itself on phones or when the mouse is idle.
+// It never touches layout, and reduced motion gets a still frame.
 export default function Background() {
   const canvasRef = useRef(null)
-  const glowRef = useRef(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const glow = glowRef.current
     const ctx = canvas.getContext('2d')
     const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const root = document.documentElement
 
     let w = 0
     let h = 0
+    let rgb = '244,244,244'
+    const readColour = () => {
+      const c = getComputedStyle(root).getPropertyValue('--fg').trim()
+      const m = c.match(/^#([0-9a-f]{6})$/i)
+      if (m) {
+        const n = parseInt(m[1], 16)
+        rgb = `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`
+      } else {
+        const p = c.match(/[\d.]+/g)
+        if (p && p.length >= 3) rgb = p.slice(0, 3).map((v) => Math.round(+v)).join(',')
+      }
+    }
+
+    let dirty = null // area drawn last frame, so only that is cleared
     const size = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.25)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       w = window.innerWidth
       h = window.innerHeight
       canvas.width = Math.round(w * dpr)
@@ -37,34 +50,35 @@ export default function Background() {
     let lastMove = -1e9
     let raf = 0
 
-    let dirty = null // area drawn last frame, so only that is cleared
     const draw = () => {
       if (dirty) ctx.clearRect(dirty.x, dirty.y, dirty.w, dirty.h)
       else ctx.clearRect(0, 0, w, h)
-      dirty = { x: px - RADIUS - 4, y: py - RADIUS - 4, w: RADIUS * 2 + 8, h: RADIUS * 2 + 8 }
+      const reach = RADIUS + PUSH + 6
+      dirty = { x: px - reach, y: py - reach, w: reach * 2, h: reach * 2 }
       const half = SPACING / 2
       const i0 = Math.max(0, Math.floor((px - RADIUS - half) / SPACING))
       const i1 = Math.ceil((px + RADIUS - half) / SPACING)
       const j0 = Math.max(0, Math.floor((py - RADIUS - half) / SPACING))
       const j1 = Math.ceil((py + RADIUS - half) / SPACING)
+      ctx.fillStyle = `rgb(${rgb})`
       for (let i = i0; i <= i1; i++) {
         for (let j = j0; j <= j1; j++) {
           const x = half + i * SPACING
           const y = half + j * SPACING
-          const d = Math.hypot(x - px, y - py)
+          const dx = x - px
+          const dy = y - py
+          const d = Math.hypot(dx, dy)
           if (d > RADIUS) continue
           let k = 1 - d / RADIUS
           k = k * k * (3 - 2 * k)
-          const r = Math.round(BONE[0] + (ACID[0] - BONE[0]) * k)
-          const g = Math.round(BONE[1] + (ACID[1] - BONE[1]) * k)
-          const b = Math.round(BONE[2] + (ACID[2] - BONE[2]) * k)
-          ctx.fillStyle = `rgba(${r},${g},${b},${0.1 + 0.62 * k})`
+          const push = d > 0.01 ? (PUSH * k) / d : 0
+          ctx.globalAlpha = 0.07 + 0.38 * k
           ctx.beginPath()
-          ctx.arc(x, y, 1 + 1.7 * k, 0, 6.2832)
+          ctx.arc(x + dx * push, y + dy * push, 0.9 + 1.4 * k, 0, 6.2832)
           ctx.fill()
         }
       }
-      glow.style.transform = `translate3d(${px}px, ${py}px, 0) translate(-50%, -50%)`
+      ctx.globalAlpha = 1
     }
 
     const place = (x, y) => {
@@ -73,6 +87,7 @@ export default function Background() {
       draw()
     }
 
+    readColour()
     size()
     place(w * 0.62, h * 0.4)
 
@@ -81,6 +96,17 @@ export default function Background() {
       draw()
     }
     window.addEventListener('resize', onResize)
+
+    // Follow the theme: sample the colour for the length of the flip.
+    let sampleUntil = 0
+    const mo = new MutationObserver(() => {
+      sampleUntil = performance.now() + 900
+      if (calm) {
+        readColour()
+        draw()
+      }
+    })
+    mo.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
 
     let onMove = null
     if (!calm) {
@@ -92,13 +118,14 @@ export default function Background() {
       }
       window.addEventListener('pointermove', onMove, { passive: true })
       const frame = (now) => {
+        if (now < sampleUntil) readColour()
         if (now - lastMove > 2500) {
           const s = now / 1000
           tx = w * (0.5 + 0.34 * Math.sin(s * 0.21))
           ty = h * (0.45 + 0.3 * Math.sin(s * 0.33 + 1))
         }
-        px += (tx - px) * 0.08
-        py += (ty - py) * 0.08
+        px += (tx - px) * 0.1
+        py += (ty - py) * 0.1
         draw()
         raf = requestAnimationFrame(frame)
       }
@@ -107,28 +134,23 @@ export default function Background() {
 
     return () => {
       cancelAnimationFrame(raf)
+      mo.disconnect()
       window.removeEventListener('resize', onResize)
       if (onMove) window.removeEventListener('pointermove', onMove)
     }
   }, [])
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-ink">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-bg">
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: `radial-gradient(circle, rgba(239,234,224,0.17) 1px, transparent 1.7px)`,
+          backgroundImage: `radial-gradient(circle, color-mix(in oklab, var(--fg) 16%, transparent) 1px, transparent 1.6px)`,
           backgroundSize: `${SPACING}px ${SPACING}px`,
         }}
       />
-      <div
-        ref={glowRef}
-        className="absolute left-0 top-0 h-[80vmax] w-[80vmax] will-change-transform"
-        style={{ background: 'radial-gradient(circle, rgba(215,255,63,0.09) 0%, rgba(215,255,63,0) 58%)' }}
-      />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(11,11,12,0.75)_100%)]" />
-      <div className="grain absolute inset-0 opacity-[0.05]" />
+      <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, color-mix(in oklab, var(--bg) 80%, transparent) 100%)' }} />
     </div>
   )
 }

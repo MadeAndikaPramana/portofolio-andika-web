@@ -1,6 +1,8 @@
 # Andika — portfolio
 
-One long page: hero, a scroll-lit statement, a 3D ring of projects that turns as you scroll, phone screenshots drifting in columns, six things every site does, sticky cards per kind of business, how it works, price, FAQ, why me and contact. Blocks fade or pop in one by one as you scroll. React 19, Vite 8, Tailwind v4, `motion/react`.
+One long page built around the business card (`kartu-nama-andika-*.svg`): black, white and greys only, Plus Jakarta Sans, the card's "A." and its dot field.
+
+Intro (dots draw the "A."), hero with the card in 3D (scroll flips it to its black back, which grows into the Work section), a sideways film strip of projects, a scroll-lit statement, about + why me, phone screenshots, six things every site does (numbered list with a sticky live demo), sticky cards per kind of business, how it works, an honest three-way comparison, price, FAQ and contact (the card again, turning to its front). The whole page flips between light and dark per section (`data-theme` on each section). A custom cursor inverts whatever it is over. React 19, Vite 8, Tailwind v4, `motion/react`.
 
 ```bash
 npm install
@@ -13,10 +15,13 @@ npm run build
 Everything editable is in `src/data.js`.
 
 - [x] `ME.whatsappNumber` is set (business WhatsApp).
-- [ ] `ME.email` (the Email button only shows when this is set) and `ME.instagram`.
+- [x] `ME.email` matches the card: andika@andikapramana.com.
+- [ ] `ME.instagram` (not shown yet).
 - [ ] `live` on each demo once its Vercel deploy exists (zine-tattoo, night-tide-tattoo, golden-hour-tattoo, clear-quote-tattoo, one-long-scroll-yoga). Until then the sheet says "Live link coming soon".
 - [ ] Read the copy in `OFFER`, `FAQ` and `STEPS` once. No price is shown on purpose ("worth every dime", negotiable, domain not included, revisions until happy). The "cheaper than most agencies / builders" line is a claim about the market: check it still holds before launch.
-- [ ] Add a domain, then `og:image`, canonical URL and sitemap.
+- [x] Domain (andikapramana.com) and canonical URL.
+- [x] `og:image` (`public/og.png`): a 1200 x 630 capture of the hero. Retake it if the hero changes.
+- [ ] Read the claims in `COMPARE` (data.js) once. They are about website builders and agencies in general, named nobody, and should stay that way.
 
 ## Photo
 
@@ -24,7 +29,7 @@ Everything editable is in `src/data.js`.
 
 ## Who is in it
 
-Swordsman (owner approved) plus seven neutral demos (`kind: 'demo'`, labelled as demos on the site). Only work the owner has approved, plus neutral demos, appears here. Do not add anything else without permission.
+Swordsman (owner approved) plus eight neutral demos (`kind: 'demo'`, labelled as demos on the site). Only work the owner has approved, plus neutral demos, appears here. Do not add anything else without permission.
 
 ## Screenshots
 
@@ -32,9 +37,11 @@ Full-size captures live in `raw/` (not committed). `npm run shots` turns them in
 
 ## Notes
 
-- Background: a dot grid with a spotlight (`src/components/Background.jsx`). Dim dots are a static CSS pattern; a small canvas draws only the ~300 dots near the light, larger and brighter. The light follows the mouse and wanders by itself on phones or when the mouse is idle. Reduced motion gets a still frame. No blur, no blend modes.
+- Background: a dot grid with a spotlight (`src/components/Background.jsx`) in the page's type colour, so it flips with the theme. A small canvas draws only the dots near the light, larger and pushed away from the mouse. The light wanders by itself on phones or when the mouse is idle. Reduced motion gets a still frame.
 
-- The ring is CSS 3D (`rotateY` + `translateZ`) driven by scroll progress. It only moves `transform`, and the "which project is in front" state lives in a small leaf component so the ring does not re-render while spinning. Measured 60 fps with no long tasks on a desktop Mac; not yet measured on a real phone.
-- `prefers-reduced-motion` gets a plain grid instead of the pinned ring, plain phone grid, and static text; nothing pinned or spinning. Not yet tested in a browser.
+- Work is a pinned strip on screens 768px and up (scroll moves it sideways, it settles on the nearest site), and a plain swipe carousel on phones and for reduced motion. Screenshots are grey except the one in the middle.
+- Scroll-linked opacity in `motion` runs on the browser's scroll timeline, which does not hold the last value past the final keyframe. Give those `useTransform`s a full 0..1 range (see Hero.jsx).
+- `public/andika-pramana.vcf` is the "Save my contact" file. Keep it in step with `ME`.
+- `prefers-reduced-motion` gets no intro, a still hero card, the swipe carousel instead of the pinned strip, a plain phone grid and static text; nothing pinned or spinning. Not yet tested in a browser.
 - Mobile screenshots are `raw/<slug>-mobile.png` (390x844 @2x); `npm run shots` makes the web versions.
-- The idea and component picks came from 21st.dev. Its component source is behind a login, so these are my own implementations of the same patterns (3D ring, magnetic dock, cursor image preview), not copies.
+- The QR code on the card back (`src/qr.js`) was traced from the card SVG and points to https://www.andikapramana.com/.

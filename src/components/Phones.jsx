@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { PROJECTS } from '../data'
-import { Reveal } from './ui'
+import { Reveal, Scramble, SplitHeading } from './ui'
 
 function Phone({ project, onOpen }) {
   return (
@@ -9,10 +9,11 @@ function Phone({ project, onOpen }) {
       type="button"
       onClick={() => onOpen(project)}
       aria-label={`Open ${project.name}`}
-      className="group block w-full rounded-[2rem] border-[5px] border-bone/20 bg-ink p-0 transition-colors hover:border-acid"
+      data-cursor="Open"
+      className="group block w-full rounded-[2rem] border-[5px] border-fg/20 bg-ink p-0 transition-colors hover:border-fg"
     >
       <span className="relative block overflow-hidden rounded-[1.6rem]">
-        <img src={`/work/${project.slug}-mobile.webp`} alt="" width="520" height="1125" loading="lazy" draggable="false" className="block aspect-[390/844] w-full object-cover object-top" />
+        <img src={`/work/${project.slug}-mobile.webp`} alt="" width="520" height="1125" loading="lazy" draggable="false" className="shot block aspect-[390/844] w-full object-cover object-top" />
       </span>
     </button>
   )
@@ -37,17 +38,17 @@ export default function Phones({ onOpen }) {
   const cols = [PROJECTS.filter((_, i) => i % 3 === 0), PROJECTS.filter((_, i) => i % 3 === 1), PROJECTS.filter((_, i) => i % 3 === 2)]
 
   return (
-    <section id="phones" ref={ref} className="relative overflow-hidden px-5 py-24 sm:px-10 md:py-32">
+    <section id="phones" data-theme="dark" ref={ref} className="relative overflow-hidden px-5 py-24 sm:px-10 md:py-32">
       <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1fr_1.15fr] lg:items-start">
         <div className="lg:sticky lg:top-28">
-          <Reveal as="p" className="label text-acid">On the phone in their hand</Reveal>
-          <Reveal as="h2" delay={0.05} className="display mt-3 text-5xl sm:text-7xl">Phone first, always.</Reveal>
-          <Reveal as="p" delay={0.1} className="mt-5 max-w-md text-lg leading-relaxed text-bone/70">
+          <Scramble as="p" text="On the phone in their hand" className="label block text-fg/50" />
+          <SplitHeading text="Phone first, always." className="display mt-3 text-5xl sm:text-7xl" />
+          <Reveal as="p" delay={0.1} className="mt-5 max-w-md text-lg leading-relaxed text-fg/65">
             Most people will open your site on a phone, standing somewhere, deciding fast. So I design that screen first and let the laptop version follow.
           </Reveal>
           <Reveal delay={0.15} className="mt-6 flex flex-wrap gap-2">
             {['Big tap targets', 'Readable without zooming', 'Message button always close'].map((t) => (
-              <span key={t} className="label rounded-full border border-bone/20 px-3 py-1.5 text-bone/75">{t}</span>
+              <span key={t} className="label rounded-full border border-fg/20 px-3 py-1.5 text-fg/75">{t}</span>
             ))}
           </Reveal>
         </div>

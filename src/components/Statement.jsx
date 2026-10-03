@@ -1,12 +1,13 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { STATEMENT } from '../data'
+import { Scramble } from './ui'
 
 function Word({ p, i, n, children, accent }) {
   const start = 0.08 + (i / n) * 0.62
-  const o = useTransform(p, [start, start + 0.1], [0.14, 1])
+  const o = useTransform(p, [0, start, start + 0.1, 1], [0.14, 0.14, 1, 1]) // full 0..1 range: see the note in Hero.jsx
   return (
-    <motion.span style={{ opacity: o }} className={`mr-[0.28em] inline-block ${accent ? 'text-acid' : ''}`}>
+    <motion.span style={{ opacity: o }} className={`mr-[0.28em] inline-block ${accent ? 'italic underline decoration-[0.06em] underline-offset-[0.12em]' : ''}`}>
       {children}
     </motion.span>
   )
@@ -20,10 +21,10 @@ export default function Statement() {
   const words = STATEMENT.words.split(' ')
 
   return (
-    <section ref={ref} style={{ height: reduce ? 'auto' : '240svh' }} className="relative">
+    <section ref={ref} data-theme="light" style={{ height: reduce ? 'auto' : '240svh' }} className="relative">
       <div className={`${reduce ? 'py-24' : 'sticky top-0 h-[100svh]'} flex items-center px-5 sm:px-10`}>
         <div className="mx-auto w-full max-w-6xl">
-          <p className="label mb-6 text-acid">What I do</p>
+          <Scramble as="p" text="What I do" className="label mb-6 block text-fg/50" />
           <p className="display text-[clamp(2.1rem,6.2vw,5.4rem)] !leading-[1.04] !tracking-[-0.03em]">
             {reduce
               ? STATEMENT.words

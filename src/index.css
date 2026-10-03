@@ -1,57 +1,91 @@
 @import "tailwindcss";
 
-@theme {
-  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-sans: 'Instrument Sans', system-ui, sans-serif;
-  --font-mono: 'DM Mono', ui-monospace, monospace;
+/*
+  Black, white and greys only, like the business card: white front, black back.
+  The whole page flips between the two as you scroll (see useThemeSections in App.jsx).
+  --bg and --fg are registered so the flip animates instead of snapping.
+*/
+@property --bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #000000;
+}
+@property --fg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f4f4f4;
+}
 
-  /* Near-black with warm bone type and one acid accent. */
-  --color-ink: #0b0b0c;
-  --color-coal: #141416;
-  --color-slate: #1d1d20;
-  --color-bone: #efeae0;
-  --color-mute: #8d8a83;
-  --color-acid: #d7ff3f;
+:root {
+  --bg: #000000;
+  --fg: #f4f4f4;
+  transition: --bg 0.7s cubic-bezier(0.4, 0, 0.2, 1), --fg 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+:root[data-theme='light'] {
+  --bg: #ebebeb;
+  --fg: #0a0a0a;
+}
+
+@theme inline {
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Follow the page: the background and the type on it. */
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  /* Fixed: the two sides of the card. */
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-smoke: #ebebeb;
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-ink);
+  background: var(--bg);
 }
 
 body {
   margin: 0;
   background: transparent; /* the page background lives on <html> and the fixed Background layer */
-  color: var(--color-bone);
+  color: var(--fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
 
 ::selection {
-  background: var(--color-acid);
-  color: var(--color-ink);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-acid);
+  outline: 2px solid var(--fg);
   outline-offset: 3px;
+}
+
+/* The custom cursor replaces the arrow on mouse devices (Cursor.jsx adds the class only when it is running). */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
 }
 
 @layer components {
   .display {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.035em;
+    font-weight: 800;
+    letter-spacing: -0.045em;
     line-height: 0.92;
   }
+  /* The card's small caps: WHATSAPP, EMAIL, WEB. */
   .label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
   }
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -59,14 +93,28 @@ body {
     min-height: 3.25rem;
     padding: 0 1.7rem;
     border-radius: 999px;
-    background: var(--color-acid);
-    color: var(--color-ink);
+    background: var(--fg);
+    color: var(--bg);
     font-weight: 700;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: color-mix(in oklab, var(--bg) 22%, var(--fg));
+    transform: translateY(101%);
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .btn:hover::before {
+    transform: translateY(0);
   }
   .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 40px -14px rgba(215, 255, 63, 0.55);
+    box-shadow: 0 18px 40px -18px color-mix(in oklab, var(--fg) 60%, transparent);
   }
   .btn-ghost {
     display: inline-flex;
@@ -76,13 +124,29 @@ body {
     min-height: 3.25rem;
     padding: 0 1.7rem;
     border-radius: 999px;
-    border: 1px solid rgba(239, 234, 224, 0.28);
+    border: 1px solid color-mix(in oklab, var(--fg) 28%, transparent);
     font-weight: 600;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
   }
   .btn-ghost:hover {
-    border-color: var(--color-bone);
-    background: rgba(239, 234, 224, 0.06);
+    border-color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
+  }
+  /* Screenshots are grey until you point at them (or they are the one in front). */
+  .shot {
+    filter: grayscale(1) contrast(1.06);
+    transition: filter 0.7s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .group:hover .shot,
+  .group:focus-visible .shot,
+  .shot.is-live {
+    filter: grayscale(0) contrast(1);
+  }
+  /* Outlined display type. */
+  .outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in oklab, var(--fg) 22%, transparent);
   }
 }
 
@@ -95,14 +159,12 @@ body {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-/* Project ring: card width and how far out the cards sit (as a multiple of the width). */
-.ring-scope {
-  --w: clamp(220px, 33vw, 430px);
-  --rk: 1.5;
-  --lift: -0.02; /* how far the wheel is raised, as a multiple of the card width */
-}
-@media (min-width: 768px) {
-  .ring-scope { --rk: 1.95; --lift: -0.2; }
+/* The card's dot field: fine dots that fade in and out in patches. */
+.dot-field {
+  background-image: radial-gradient(circle, currentColor 0.9px, transparent 1.3px);
+  background-size: 14px 14px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 70% 30%, #000 0%, transparent 70%), radial-gradient(ellipse 50% 45% at 20% 75%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(ellipse 60% 55% at 70% 30%, #000 0%, transparent 70%), radial-gradient(ellipse 50% 45% at 20% 75%, #000 0%, transparent 70%);
 }
 
 /* Little live demos inside the feature cards. Transform and opacity only, and still (fully visible) for reduced motion. */
@@ -114,6 +176,7 @@ body {
   .viz-swap-a { animation: viz-swap-a 7s ease-in-out infinite; }
   .viz-swap-b { animation: viz-swap-b 7s ease-in-out infinite; }
   .viz-ripple { animation: viz-ripple 2.6s ease-out infinite; animation-delay: var(--d, 0s); }
+  .float-slow { animation: float-slow 7s ease-in-out infinite; }
 }
 @keyframes viz-fill { 0% { transform: scaleX(0.04); } 24%, 86% { transform: scaleX(1); } 100% { transform: scaleX(0.04); } }
 @keyframes viz-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -50%, 0); } }
@@ -122,8 +185,10 @@ body {
 @keyframes viz-swap-a { 0%, 40% { opacity: 1; } 50%, 90% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes viz-swap-b { 0%, 40% { opacity: 0; } 50%, 90% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes viz-ripple { 0% { transform: scale(0.3); opacity: 0.7; } 100% { transform: scale(1.6); opacity: 0; } }
+@keyframes float-slow { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -10px, 0); } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  :root { transition: none; }
   .marquee-track { animation: none !important; }
 }

@@ -31,10 +31,10 @@ function DockItem({ mouseX, item }) {
       onClick={() => jump(item.id)}
       aria-label={item.label}
       style={{ width: size, height: size }}
-      className="group relative flex items-center justify-center rounded-2xl bg-slate text-bone transition-colors hover:bg-acid hover:text-ink focus-visible:bg-acid focus-visible:text-ink"
+      className="group relative flex items-center justify-center rounded-2xl bg-bg/10 text-bg transition-colors hover:bg-bg hover:text-fg focus-visible:bg-bg focus-visible:text-fg"
     >
       {item.icon}
-      <span className="label pointer-events-none absolute -top-9 whitespace-nowrap rounded-md bg-bone px-2 py-1 text-[0.62rem] text-ink opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+      <span className="label pointer-events-none absolute -top-9 whitespace-nowrap rounded-md bg-fg px-2 py-1 text-[0.62rem] text-bg opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
         {item.label}
       </span>
     </motion.button>
@@ -48,7 +48,7 @@ export default function Dock() {
       <div
         onPointerMove={(e) => e.pointerType === 'mouse' && mouseX.set(e.clientX)}
         onPointerLeave={() => mouseX.set(-9999)}
-        className="pointer-events-auto flex h-[64px] items-end gap-2 rounded-[1.4rem] border border-bone/15 bg-coal/95 p-2 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.9)]"
+        className="pointer-events-auto flex h-[64px] items-end gap-2 rounded-[1.4rem] bg-fg p-2 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)]"
       >
         {ITEMS.map((item) => (
           <DockItem key={item.id} mouseX={mouseX} item={item} />
