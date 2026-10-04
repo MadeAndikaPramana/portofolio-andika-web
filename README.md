@@ -2,7 +2,7 @@
 
 One long page built around the business card (`kartu-nama-andika-*.svg`): black, white and greys only, Plus Jakarta Sans, the card's "A." and its dot field.
 
-Intro (dots draw the "A."), hero with the card in 3D (scroll flips it to its black back, which grows into the Work section), a sideways film strip of projects, a scroll-lit statement, about + why me, phone screenshots, six things every site does (numbered list with a sticky live demo), sticky cards per kind of business, how it works, an honest three-way comparison, price, FAQ and contact (the card again, turning to its front). The whole page flips between light and dark per section (`data-theme` on each section). A custom cursor inverts whatever it is over. React 19, Vite 8, Tailwind v4, `motion/react`.
+Intro (dots draw the "A."), hero with the card in 3D (scroll flips it to its black back, which grows into the Work section), a grid of project cards that turn over, a scroll-lit statement, about + why me, phone screenshots, six things every site does (numbered list with a sticky live demo), sticky cards per kind of business, how it works, an honest three-way comparison, price, FAQ and contact (the card again, turning to its front). The whole page flips between light and dark per section (`data-theme` on each section). A custom cursor inverts whatever it is over. React 19, Vite 8, Tailwind v4, `motion/react`.
 
 ```bash
 npm install
@@ -43,7 +43,7 @@ Full-size captures live in `raw/` (not committed). `npm run shots` turns them in
 
 - Background: a dot grid with a spotlight (`src/components/Background.jsx`) in the page's type colour, so it flips with the theme. A small canvas draws only the dots near the light, larger and pushed away from the mouse. The light wanders by itself on phones or when the mouse is idle. Reduced motion gets a still frame.
 
-- Work is a pinned strip on screens 768px and up (scroll moves it sideways, it settles on the nearest site), and a plain swipe carousel on phones and for reduced motion. Screenshots are grey except the one in the middle.
+- Work is a grid of business cards (`Work.jsx`): white front with the grey screenshot, black back laid out like the card's contact rows. Hover turns a card over on a mouse, the first tap does on touch; filters for Tattoo / Wellness / Venues come from each project's `niche`. Plain scroll, nothing pinned (the earlier pinned strip fought the page scroll).
 - Scroll-linked opacity in `motion` runs on the browser's scroll timeline, which does not hold the last value past the final keyframe. Give those `useTransform`s a full 0..1 range (see Hero.jsx).
 - `public/andika-pramana.vcf` is the "Save my contact" file. Keep it in step with `ME`.
 - `prefers-reduced-motion` gets no intro, a still hero card, the swipe carousel instead of the pinned strip, a plain phone grid and static text; nothing pinned or spinning. Not yet tested in a browser.
