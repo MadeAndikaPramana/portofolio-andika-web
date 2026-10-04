@@ -17,6 +17,12 @@ export const ME = {
   instagram: '',
 }
 
+// The hero's headline (split into words for the animation) and the line under it.
+export const HERO = {
+  headline: ['Websites', 'that', 'make', 'people', 'message', 'you.'],
+  lead: 'I build fast, good-looking sites for Bali businesses. You get a real page to click through before you pay anything.',
+}
+
 const waText = encodeURIComponent('Hi Andika, I saw your portfolio and I would like a website for my business.')
 export const WHATSAPP = ME.whatsappNumber ? `https://wa.me/${ME.whatsappNumber}?text=${waText}` : 'https://wa.me/'
 export const EMAIL = ME.email ? `mailto:${ME.email}` : null

@@ -27,8 +27,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, sans-serif;
 
   /* Follow the page: the background and the type on it. */
   --color-bg: var(--bg);

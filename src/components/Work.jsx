@@ -28,7 +28,7 @@ function Front({ project, n }) {
   return (
     <div className="absolute inset-0 flex flex-col overflow-hidden rounded-[1.6cqw] bg-paper p-[2.6cqw] text-ink [backface-visibility:hidden]">
       <div className="relative min-h-0 flex-1 overflow-hidden rounded-[1cqw] bg-ink">
-        <img src={`/work/${project.slug}.webp`} alt="" width="1200" height="750" loading="lazy" draggable="false" className="block h-full w-full object-cover object-top grayscale" />
+        <img src={`/work/${project.slug}.webp`} alt={`${project.name} website, ${project.niche.toLowerCase()}`} width="1200" height="750" loading="lazy" draggable="false" className="block h-full w-full object-cover object-top grayscale" />
       </div>
       <div className="flex items-end justify-between px-[1cqw] pt-[2.4cqw]">
         <p className="truncate text-[4.4cqw] font-extrabold leading-none tracking-[-0.04em]">{project.short}</p>

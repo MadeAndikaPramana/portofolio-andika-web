@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { STATEMENT } from '../data'
 import { Scramble } from './ui'
@@ -7,7 +7,7 @@ function Word({ p, i, n, children, accent }) {
   const start = 0.08 + (i / n) * 0.62
   const o = useTransform(p, [0, start, start + 0.1, 1], [0.14, 0.14, 1, 1]) // full 0..1 range: see the note in Hero.jsx
   return (
-    <motion.span style={{ opacity: o }} className={`mr-[0.28em] inline-block ${accent ? 'italic underline decoration-[0.06em] underline-offset-[0.12em]' : ''}`}>
+    <motion.span style={{ opacity: o }} className={`inline-block ${accent ? 'italic underline decoration-[0.06em] underline-offset-[0.12em]' : ''}`}>
       {children}
     </motion.span>
   )
@@ -29,9 +29,12 @@ export default function Statement() {
             {reduce
               ? STATEMENT.words
               : words.map((w, i) => (
-                  <Word key={w + i} p={p} i={i} n={words.length} accent={STATEMENT.accent.includes(w)}>
-                    {w}
-                  </Word>
+                  <Fragment key={w + i}>
+                    {i > 0 && ' '}
+                    <Word p={p} i={i} n={words.length} accent={STATEMENT.accent.includes(w)}>
+                      {w}
+                    </Word>
+                  </Fragment>
                 ))}
           </p>
         </div>

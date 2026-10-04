@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { Fragment, useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react'
 
 // Blocks appear one by one as you scroll to them. 'rise' fades up, 'pop' fades in while growing from slightly smaller.
@@ -32,17 +32,21 @@ export function SplitHeading({ as = 'h2', text, className = '', delay = 0 }) {
   const Tag = motion[as]
   const words = text.split(' ')
   return (
-    <Tag className={className} aria-label={text} initial="hidden" whileInView="shown" viewport={{ once: true, margin: '0px 0px -12% 0px' }}>
+    // Real spaces between the words (not margins), so the heading reads as a sentence to search engines and screen readers.
+    <Tag className={className} initial="hidden" whileInView="shown" viewport={{ once: true, margin: '0px 0px -12% 0px' }}>
       {words.map((w, i) => (
-        <span key={w + i} aria-hidden="true" className="-mb-[0.14em] mr-[0.22em] inline-block overflow-hidden pb-[0.14em] align-bottom last:mr-0">
-          <motion.span
-            className="inline-block"
-            variants={{ hidden: reduce ? {} : { y: '110%' }, shown: { y: 0 } }}
-            transition={{ duration: 0.85, delay: delay + i * 0.05, ease: [0.2, 0.7, 0.2, 1] }}
-          >
-            {w}
-          </motion.span>
-        </span>
+        <Fragment key={w + i}>
+          {i > 0 && ' '}
+          <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-bottom">
+            <motion.span
+              className="inline-block"
+              variants={{ hidden: reduce ? {} : { y: '110%' }, shown: { y: 0 } }}
+              transition={{ duration: 0.85, delay: delay + i * 0.05, ease: [0.2, 0.7, 0.2, 1] }}
+            >
+              {w}
+            </motion.span>
+          </span>
+        </Fragment>
       ))}
     </Tag>
   )

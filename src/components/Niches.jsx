@@ -8,7 +8,7 @@ const bySlug = Object.fromEntries(PROJECTS.map((p) => [p.slug, p]))
 function Thumb({ project, onOpen, tall }) {
   return (
     <button type="button" onClick={() => onOpen(project)} aria-label={`Open ${project.name}`} data-cursor="Open" className="group relative block overflow-hidden rounded-xl border border-fg/12 bg-ink text-left transition-colors hover:border-fg">
-      <img src={`/work/${project.slug}.webp`} alt="" width="1200" height="750" loading="lazy" className={`shot block w-full object-cover object-top group-hover:scale-105 ${tall ? 'aspect-[4/3]' : 'aspect-[16/10]'}`} />
+      <img src={`/work/${project.slug}.webp`} alt={`${project.name} website, ${project.niche.toLowerCase()}`} width="1200" height="750" loading="lazy" className={`shot block w-full object-cover object-top group-hover:scale-105 ${tall ? 'aspect-[4/3]' : 'aspect-[16/10]'}`} />
       <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pb-2 pt-8">
         <span className="text-sm font-semibold text-white">{project.short}</span>
       </span>

@@ -45,7 +45,7 @@ export default function Intro() {
 
     const start = async () => {
       try {
-        await document.fonts.load('800 200px "Plus Jakarta Sans"')
+        await document.fonts.load('800 200px "Plus Jakarta Sans Variable"')
       } catch {
         /* fall back to whatever font is there */
       }
@@ -63,7 +63,7 @@ export default function Intro() {
       off.height = h
       const o = off.getContext('2d')
       o.fillStyle = '#fff'
-      o.font = `800 ${size}px "Plus Jakarta Sans", system-ui, sans-serif`
+      o.font = `800 ${size}px "Plus Jakarta Sans Variable", system-ui, sans-serif`
       o.textAlign = 'center'
       o.textBaseline = 'middle'
       o.fillText('A.', w / 2, h / 2 + size * 0.04)

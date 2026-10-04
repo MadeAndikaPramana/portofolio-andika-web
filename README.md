@@ -39,6 +39,15 @@ Do not add anything else without permission.
 
 Full-size captures live in `raw/` (not committed). `npm run shots` turns them into `public/work/*.webp`.
 
+## SEO
+
+The page renders in the browser, so `scripts/seo.js` (a Vite plugin) adds at build time, from `src/data.js`:
+
+- a plain-HTML copy of the page's text inside `#root` for crawlers that do not run JavaScript (React replaces it on load; it is visually hidden meanwhile and shows normally with JavaScript off);
+- schema.org data: `Person`, `ProfessionalService` (area served: Bali) and `WebSite`.
+
+Headings split into animated words keep real spaces between the words, so they read as sentences. Project screenshots have alt text from each project's name and niche. `public/robots.txt` and `public/sitemap.xml` point at the www domain (update `lastmod` when the page changes a lot). The font is self-hosted through Fontsource, so nothing loads from Google before the first paint.
+
 ## Notes
 
 - Background: a dot grid with a spotlight (`src/components/Background.jsx`) in the page's type colour, so it flips with the theme. A small canvas draws only the dots near the light, larger and pushed away from the mouse. The light wanders by itself on phones or when the mouse is idle. Reduced motion gets a still frame.

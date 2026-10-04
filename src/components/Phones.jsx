@@ -13,7 +13,7 @@ function Phone({ project, onOpen }) {
       className="group block w-full rounded-[2rem] border-[5px] border-fg/20 bg-ink p-0 transition-colors hover:border-fg"
     >
       <span className="relative block overflow-hidden rounded-[1.6rem]">
-        <img src={`/work/${project.slug}-mobile.webp`} alt="" width="520" height="1125" loading="lazy" draggable="false" className="shot block aspect-[390/844] w-full object-cover object-top" />
+        <img src={`/work/${project.slug}-mobile.webp`} alt={`${project.name} website on a phone`} width="520" height="1125" loading="lazy" draggable="false" className="shot block aspect-[390/844] w-full object-cover object-top" />
       </span>
     </button>
   )

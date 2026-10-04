@@ -1,9 +1,9 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useRef } from 'react'
 import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
+import { HERO } from '../data'
 import { CardBack, CardFront } from './Card'
 import { jump, useIntroDone } from './ui'
 
-const HEADLINE = ['Websites', 'that', 'make', 'people', 'message', 'you.']
 const ASPECT = 55 / 90
 
 // Scroll beats, as shares of the pinned hero:
@@ -62,18 +62,22 @@ function Copy({ style }) {
   const show = started || reduce
   return (
     <motion.div style={style} className="relative z-10">
-      <h1 className="display text-[clamp(2.7rem,6.6vw,6.6rem)]" aria-label={HEADLINE.join(' ')}>
-        {HEADLINE.map((w, i) => (
-          <span key={w + i} className="-mb-[0.14em] mr-[0.2em] inline-block overflow-hidden pb-[0.14em] align-bottom" aria-hidden="true">
-            <motion.span
-              initial={reduce ? false : { y: '112%', rotate: 6 }}
-              animate={show ? { y: 0, rotate: 0 } : undefined}
-              transition={{ duration: 1, delay: 0.05 + i * 0.07, ease: [0.2, 0.7, 0.2, 1] }}
-              className={`inline-block origin-bottom-left ${w === 'message' ? 'italic' : ''}`}
-            >
-              {w}
-            </motion.span>
-          </span>
+      {/* Real spaces between the words (not margins), so search engines and screen readers read a sentence. */}
+      <h1 className="display text-[clamp(2.7rem,6.6vw,6.6rem)]">
+        {HERO.headline.map((w, i) => (
+          <Fragment key={w + i}>
+            {i > 0 && ' '}
+            <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-bottom">
+              <motion.span
+                initial={reduce ? false : { y: '112%', rotate: 6 }}
+                animate={show ? { y: 0, rotate: 0 } : undefined}
+                transition={{ duration: 1, delay: 0.05 + i * 0.07, ease: [0.2, 0.7, 0.2, 1] }}
+                className={`inline-block origin-bottom-left ${w === 'message' ? 'italic' : ''}`}
+              >
+                {w}
+              </motion.span>
+            </span>
+          </Fragment>
         ))}
       </h1>
       <motion.div
@@ -83,7 +87,7 @@ function Copy({ style }) {
         className="mt-6 flex flex-wrap items-end gap-x-10 gap-y-5"
       >
         <p className="max-w-md text-lg leading-relaxed text-ink/70 sm:text-xl">
-          I build fast, good-looking sites for Bali businesses. You get a real page to click through before you pay anything.
+          {HERO.lead}
         </p>
         <button type="button" onClick={() => jump('work')} data-cursor="Work" className="label hidden items-center gap-3 text-ink/60 transition-colors hover:text-ink lg:flex">
           <span className="relative block h-10 w-6 rounded-full border border-current">
