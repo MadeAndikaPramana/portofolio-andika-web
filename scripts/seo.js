@@ -46,7 +46,7 @@ export function prerenderedPage() {
 export function structuredData() {
   const url = ME.url
   const phone = `+${ME.whatsappNumber}`
-  const address = { '@type': 'PostalAddress', addressRegion: ME.place, addressCountry: 'ID' }
+  const address = { '@type': 'PostalAddress', addressLocality: ME.locality, addressRegion: ME.place, addressCountry: 'ID' }
   const data = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -74,7 +74,7 @@ export function structuredData() {
         email: ME.email,
         telephone: phone,
         address,
-        areaServed: { '@type': 'AdministrativeArea', name: ME.place },
+        areaServed: [...ME.serviceAreas.map((name) => ({ '@type': 'AdministrativeArea', name })), { '@type': 'AdministrativeArea', name: ME.place }],
         founder: { '@id': `${url}#person` },
         knowsLanguage: ['en', 'id'],
       },

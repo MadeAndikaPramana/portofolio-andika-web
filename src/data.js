@@ -7,6 +7,9 @@ export const ME = {
   full: 'Made Andika Pramana',
   role: 'Web developer',
   place: 'Bali',
+  // Where Andika is based and the areas he serves (structured data only; no street address on purpose).
+  locality: 'Denpasar',
+  serviceAreas: ['Denpasar', 'Badung'],
   github: 'https://github.com/MadeAndikaPramana',
   whatsappNumber: '6281932200554', // digits only, with country code
   whatsappDisplay: '+62 819-3220-0554',
