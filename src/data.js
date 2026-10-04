@@ -135,11 +135,11 @@ export const PROJECTS = [
     place: 'Demo',
     kind: 'demo',
     year: '2026',
-    live: null,
-    private: true, // anonymised concept, see the note above
-    line: 'Black and grey, an editorial serif, every photo in mono.',
+    // Was an anonymised concept; the deployment itself is now a neutral demo (placeholders in the source), so it can link.
+    live: 'https://abstract-ink.vercel.app/',
+    line: 'Blackletter and black-and-grey, every photo in mono.',
     story:
-      'A calm, editorial site for a fine-line studio: a big serif headline, a portfolio you can filter by style, a quote form that asks the right questions and aftercare written in plain words. Several pages, built with Astro.',
+      'A black-and-grey studio site with a blackletter name: numbers that count up, a portfolio filtered by style, a quote builder that turns a spot on the body into one WhatsApp message, and aftercare in plain words. Several pages, built with Astro.',
     stack: ['Astro', 'React islands', 'Tailwind'],
   },
   {
